@@ -8,7 +8,7 @@
 		
 		<div>
 			<?php
-			
+			include("config.php");
 			// Take in parameters
 			$what = $_POST["activity"];
 			$how = $_POST["rating"];
