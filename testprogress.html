@@ -14,13 +14,31 @@
           ['10/30',  7]
         ]);-->
         
-        var jsonData = $.ajax({
+        <table>
+		include("config.php"); // which contains connection to database
+		$query = "select * from clarity_username where 'when' > \'2012-10-28'\";
+		
+		$result = mysql_query($query);
+		
+		<!--First, try getting the data i need into a table.>
+		while ($row = mysql_fetch_assoc($result)) {
+			echo "<p>".$row["what"]."</p>";
+			echo "<p>".$row["how"]."</p>";
+			echo "<p>".$row[when"]."</p>";
+		}
+		</table>
+        
+        
+        
+   <!--     var jsonData = $.ajax({
           url: "getData.php",
           dataType:"json",
           async: false
-          }).responseText;
+          }).responseText;-->
+        <!-- Step 1) Pull data from server>  
 		
-		var data = new google.visualization.DataTable(jsonData);
+	        <!-- Step 2) Format data>		
+	<!--	var data = new google.visualization.DataTable(jsonData);
 		
         var options = {
           title: 'Happiness Level',
