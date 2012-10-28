@@ -12,11 +12,11 @@
 		<p>Log Activity</p>
     </div>
    	<p>
-		<form>
+		<form action="submit.php" method="post">
 			What did you do today? 
 				<input type="text" name="activity" /> <br>
 			How did it make you feel? 
-				<select>
+				<select name="rating">
 					<option value="5">5</option>
 					<option value="3">3</option>
 					<option value="0">0</option>
@@ -36,11 +36,10 @@
 					<input type="checkbox" name="tag" value="lone">Alone time
 				<br>			
 			Any additional notes? <br>
-				<textarea rows="3" cols="30">
+				<textarea rows="3" cols="30" name="notes">
 				</textarea>
 				<br>
-			<form action="">
-				<input type="button" value="Submit" onClick="location.href='construction.html'">
+				<input type="submit" value="Submit">
 			</form>	
 		</form>
 	</p>
