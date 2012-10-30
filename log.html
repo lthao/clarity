@@ -12,9 +12,9 @@
 		<p>Log Activity</p>
     </div>
    	<p>
-		<form action="submit.php" method="post">
-			What did you do today? 
-				<input type="text" name="activity" /> <br>
+		<form action="submit.php" id="logform" method="post">
+			What did you do today? <input type="text" name="activity"/>
+				<br>
 			How did it make you feel? 
 				<select name="rating">
 					<option value="5">5</option>
@@ -24,23 +24,22 @@
 					<option value="-5">-5</option>
 				</select> 
 				<br>
-			When did you do it?
-				<input type="datetime" name="time" />
+			When did you do it? <input type="datetime" name="time"/>
 				<br>
-			What tags describe this activity or what you liked most/least about this activity? <br>
-					<input type="checkbox" name="tag" value="outdoors">Outdoors
-					<input type="checkbox" name="tag" value="play">Play
-					<input type="checkbox" name="tag" value="read">Reading
-					<input type="checkbox" name="tag" value="write">Writing
-					<input type="checkbox" name="tag" value="social">Social
-					<input type="checkbox" name="tag" value="lone">Alone time
+			What tags describe this activity or what you liked most/least about this activity? 
+				<br>
+					<input type="checkbox" name="tag1" value="outdoors">Outdoors
+					<input type="checkbox" name="tag2" value="play">Play
+					<input type="checkbox" name="tag3" value="read">Reading
+					<input type="checkbox" name="tag4" value="write">Writing
+					<input type="checkbox" name="tag5" value="social">Social
+					<input type="checkbox" name="tag6" value="lone">Alone time
 				<br>			
-			Any additional notes? <br>
-				<textarea rows="3" cols="30" name="notes">
-				</textarea>
-				<br>
-				<input type="submit" value="Submit">
-			</form>	
+			Any additional notes? 
+			<br>
+			<textarea rows="3" cols="30" name="notes"></textarea>
+			<br>
+			<input type="submit" value="Submit">
 		</form>
 	</p>
 	<div id="footer">
