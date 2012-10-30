@@ -12,8 +12,7 @@
 		$how = $_POST["rating"];
 		$when = $_POST["time"];
 		$notes = $_POST["notes"];
-		
-<<<<<<< HEAD
+	
 		//INSERT INTO `c_cs147_lao793`.`orders` (`name`, `email`, `book`) VALUES ('$name', '$email', '$book');
 		
 		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `when`, `notes`) VALUES ('$what', '$how', '$when', '$notes')";
