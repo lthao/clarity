@@ -12,13 +12,37 @@
 		$how = $_POST["rating"];
 		$when = $_POST["time"];
 		$notes = $_POST["notes"];
+		$tag1 = 0;
+		if (isset($_POST["tag1"])) {
+			$tag1 = 1;
+		}
+		$tag2 = 0;
+		if (isset($_POST["tag2"])) {
+			$tag2 = 1;
+		}
+		$tag3 = 0;
+		if (isset($_POST["tag3"])) {
+			$tag3 = 1;
+		}
+		$tag4 = 0;
+		if (isset($_POST["tag4"])) {
+			$tag4 = 1;
+		}
+		$tag5 = 0;
+		if (isset($_POST["tag5"])) {
+			$tag5 = 1;
+		}
+		$tag6 = 0;
+		if (isset($_POST["tag6"])) {
+			$tag6 = 1;
+		}
 	
 		//INSERT INTO `c_cs147_lao793`.`orders` (`name`, `email`, `book`) VALUES ('$name', '$email', '$book');
 		
-		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `when`, `notes`) VALUES ('$what', '$how', '$when', '$notes')";
-		echo $query;
+		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `when`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`) VALUES ('$what', '$how', '$when', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6')";
+		//echo $query;
 		$result = mysql_query($query);
-		echo "<p>Submitted</p>";
+		//echo "<p>Submitted</p>";
 		
 		?>
 	</div>
@@ -26,31 +50,3 @@
 	</script>
 </body>
 </html>
-
-<!--
-<title>Maya Online Books</title>
-<link rel="apple-touch-icon" href="appicon.png" />
-<link rel="apple-touch-startup-image" href="startup.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="viewport" content="width=device-width, user-scalable=no" />
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-
-<link href="style.css" rel="stylesheet" type="text/css">
--->
-
-<!--
-<script type="text/javascript">
-$("a").click(function (event) {
-    event.preventDefault();
-    window.location = $(this).attr("href");
-});
-$("#someform").submit(function() {
-	event.preventDefault();
-	$event.preventDefault();
-	$.post("submit.php", $("someform").serialize(), function(data) {
-		$result("result").html(data);
-	});
-});
-</script>
--->
