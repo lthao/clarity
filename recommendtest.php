@@ -20,6 +20,8 @@
 		$tag4 = 0;
 		$tag5 = 0;
 		$tag6 = 1;
+		$tag7 = 0;
+		$tag8 = 0;
 		//$targetSum = 20;
 		$query = "SELECT * FROM clarity WHERE";
 		echo "before: ";
@@ -63,8 +65,24 @@
 		if ($tag6) {
 			if ($tagPresent) {
 				$query .= " OR";
+			} else {
+				$tagPresent = 1;
 			}
 			$query .= " tag6='1'";
+		}
+		if ($tag7) {
+			if ($tagPresent) {
+				$query .= " OR";
+			} else {
+				$tagPresent = 1;
+			}
+			$query .= " tag7='1'";
+		}
+		if ($tag8) {
+			if ($tagPresent) {
+				$query .= " OR";
+			}
+			$query .= " tag8='1'";
 		}
 		echo "<br />";
 		//$exactQuery = $query;
