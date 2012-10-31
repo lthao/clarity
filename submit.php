@@ -17,7 +17,7 @@
 		//echo $_POST['rating'];
 		$what = $_POST["activity"];
 		$how = $_POST["rating"];
-		$when = $_POST["time"];
+		$ctime = $_POST["time"];
 		$notes = $_POST["notes"];
 		$tag1 = 0;
 		$tag2 = 0;
@@ -58,7 +58,7 @@
 	
 		//INSERT INTO `c_cs147_lao793`.`orders` (`name`, `email`, `book`) VALUES ('$name', '$email', '$book');
 		
-		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `when`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`, `sum`) VALUES ('$what', '$how', '$when', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6', '$sum')";
+		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `ctime`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`, `sum`) VALUES ('$what', '$how', '$ctime', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6', '$sum')";
 		//echo $query;
 		$result = mysql_query($query);
 		

@@ -13,19 +13,67 @@
     </div>
 	<?php
 		include("config.php");
+		
 		$tagPresent = 0;
-		$tag1 = 1;
-		$tag2 = 1;
-		$tag3 = 0;
-		$tag4 = 0;
-		$tag5 = 0;
-		$tag6 = 1;
-		$tag7 = 0;
-		$tag8 = 0;
+		$name = "";
+		
+		/*
+		$tag1 = 0;//$newRow['tag1'];
+		echo "t1: ", $tag1, "<br />";
+		$tag2 = 0;//$newRow['tag2'];
+		echo "t2: ", $tag2, "<br />";
+		$tag3 = 0;//$newRow['tag3'];
+		echo "t3: ", $tag3, "<br />";
+		$tag4 = 0;//$newRow['tag4'];
+		echo "t4: ", $tag4, "<br />";
+		$tag5 = 0;//$newRow['tag5'];
+		echo "t5: ", $tag5, "<br />";
+		$tag6 = 0;//$newRow['tag6'];
+		echo "t6: ", $tag6, "<br />";
+		$tag7 = 0;//$newRow['tag7'];
+		echo "t7: ", $tag7, "<br />";
+		$tag8 = 0;//$newRow['tag8'];
+		echo "t8: ", $tag8, "<br />";
+		*/
+		
+		$recentLog = "SELECT * FROM clarity WHERE how != 'NULL' ORDER BY ctime DESC";
+		$recentLogResult = mysql_query($recentLog);
+		$newRow;
+		$newRow = mysql_fetch_array($recentLogResult); 
+		echo $newRow['what'], " ", $newRow['how'], " ", $newRow['ctime'], " ", $newRow['notes'], " ", $newRow['sum'];
+		echo "<br />";
+		$name = $newRow['what'];
+		$tag1 = $newRow['tag1'];
+		$tag2 = $newRow['tag2'];
+		$tag3 = $newRow['tag3'];
+		$tag4 = $newRow['tag4'];
+		$tag5 = $newRow['tag5'];
+		$tag6 = $newRow['tag6'];
+		$tag7 = $newRow['tag7'];
+		$tag8 = $newRow['tag8'];
+		echo "<br/ >";
+		echo "name: ", $name, "<br />";
+		//$tag1 = $newRow['tag1'];
+		echo "t1: ", $tag1, "<br />";
+		//$tag2 = $newRow['tag2'];
+		echo "t2: ", $tag2, "<br />";
+		//$tag3 = 0;//$newRow['tag3'];
+		echo "t3: ", $tag3, "<br />";
+		//$tag4 = 0;//$newRow['tag4'];
+		echo "t4: ", $tag4, "<br />";
+		//$tag5 = 0;//$newRow['tag5'];
+		echo "t5: ", $tag5, "<br />";
+		//$tag6 = 0;//$newRow['tag6'];
+		echo "t6: ", $tag6, "<br />";
+		//$tag7 = 0;//$newRow['tag7'];
+		echo "t7: ", $tag7, "<br />";
+		//$tag8 = 0;//$newRow['tag8'];
+		echo "t8: ", $tag8, "<br />";
+		
 		//$targetSum = 20;
 		$query = "SELECT * FROM clarity WHERE";
-		echo "before: ";
-		echo $query;
+		//echo "before: ";
+		//echo $query;
 		if ($tag1) {
 			$query .= " tag1='1'";
 			$tagPresent = 1;
@@ -84,13 +132,12 @@
 			}
 			$query .= " tag8='1'";
 		}
-		echo "<br />";
 		//$exactQuery = $query;
 		//$exactQuery .= " AND sum LIKE '{$targetSum}'";
 		//echo $exactQuery, "<br />";
 		$query .= " ORDER BY sum ASC";
 		echo "<br />";
-		echo "after: ";
+		echo "query: ";
 		echo $query;
 		echo "<br />";
 		
@@ -98,9 +145,11 @@
 		echo "results: ";
 		echo "<br />";
 		while($row = mysql_fetch_array($result)) {
-			echo $row['what'], " ", $row['how'], " ", $row['when'], " ", $row['notes'], " ", $row['sum'];
-		    echo "<br />";
-		}
+			if ($row['what'] != $name) {
+				echo $row['what'], " ", $row['how'], " ", $row['ctime'], " ", $row['notes'], " ", $row['sum'], " ", $row['tag2'];
+		    	echo "<br />";
+			}
+		} 
 	?>
 	<!--
    	<p>
