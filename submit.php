@@ -20,40 +20,50 @@
 		$when = $_POST["time"];
 		$notes = $_POST["notes"];
 		$tag1 = 0;
+		$tag2 = 0;
+		$tag3 = 0;
+		$tag4 = 0;
+		$tag5 = 0;
+		$tag6 = 0;
+		$sum = 0;
 		if (isset($_POST["tag1"])) {
 			$tag1 = 1;
+			$sum += 10;
 		}
 		$tag2 = 0;
 		if (isset($_POST["tag2"])) {
 			$tag2 = 1;
+			$sum += 10;
 		}
 		$tag3 = 0;
 		if (isset($_POST["tag3"])) {
 			$tag3 = 1;
+			$sum += 10;
 		}
 		$tag4 = 0;
 		if (isset($_POST["tag4"])) {
 			$tag4 = 1;
+			$sum += 10;
 		}
 		$tag5 = 0;
 		if (isset($_POST["tag5"])) {
 			$tag5 = 1;
+			$sum += 10;
 		}
 		$tag6 = 0;
 		if (isset($_POST["tag6"])) {
 			$tag6 = 1;
+			$sum += 10;
 		}
 	
 		//INSERT INTO `c_cs147_lao793`.`orders` (`name`, `email`, `book`) VALUES ('$name', '$email', '$book');
 		
-		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `when`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`) VALUES ('$what', '$how', '$when', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6')";
+		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `when`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`, `sum`) VALUES ('$what', '$how', '$when', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6', '$sum')";
 		//echo $query;
 		$result = mysql_query($query);
 		
 		?>
 	</div>
-	<script type="text/javascript">
-	</script>
 	<div id="footer">
 		<div class="box">
 		<img src="images/Ribbon.png" height="64" style ="max-width: 320px" alt="Whole Ribbon" usemap="#ribbonMap" align ="center">
