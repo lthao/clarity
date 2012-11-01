@@ -5,24 +5,64 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Clarity</title>
     <link href="css/style.css"rel="stylesheet" type="text/css" />
-</head>
+    
+       <?php
+          include("config.php");
+      	$result = mysql_query("SELECT `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL'");
+    	$i = 0;
+    	$datastring = "data.addRows([";
+    	while($row = mysql_fetch_array($result)) {
+			$i++;
+			if ($i > 1) {
+				$datastring = $datastring.",";}
+			${$how.$i} = $row['how'];
+			${$ctime.$i} = $row['ctime'];
+			$datastring = $datastring."[".${$ctime.$i}.",".${$how.$i}."]";
+   		//	echo $row['how'], ", ",$row['ctime'];
+   		    }
+   		$datastring = $datastring."])";
+	    echo $datastring;
+?>  
+    
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
 
-<body>
-    <div class="nav2">
-<p>Progress</p>
-    </div>
-    <div class="clear"></div>
-    <p>
-You're at the Progress page. More features are being developed! Here's an example of what your Happiness Level 	</br>graphs will look like:
-</p>
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {'packages':['corechart']});
 
-<img src="images/TodayHappGraph.png" height="198" style ="max-width: 320px" align ="center">
-<p></p>
-<img src="images/LastWkHappGraph.png" height="198" style ="max-width: 320px" align ="center">
-<p></p>
-</br>
-</br>
-</br>
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Date');
+        data.addColumn('number', 'Happiness');
+        data.addRows([
+          [10.23, 3],
+          [10.24, 5],
+          [10.25, -4],
+          [10.26, 1],
+          [10.27, -2]
+        ]);
+
+        // Set chart options
+        var options = {'title':'Am I Happy?',
+                       'width':320,
+                       'height':300};
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="nav2"><p>Progress</p></div>
+    <div id="chart_div"></div>
+    
+  </body>
+</html>
 </br>
 </br>			
 <div id="footer">
@@ -32,7 +72,7 @@ You're at the Progress page. More features are being developed! Here's an exampl
 <area shape = "rect" coords="0,0,64,64" alt="Progress" href="progress.html"> </area>
 <area shape = "rect" coords="64,0,128,64" alt="Log Activity" href="log.html">	
 <area shape = "rect" coords="128,0,192,64" alt="Log Activity" href="history.html">
-<area shape = "rect" coords="192,0,256,64" alt="Recommendations" href="recommendtest.php">
+<area shape = "rect" coords="192,0,256,64" alt="Log Activity" href="recommendations.html">
 <area shape = "rect" coords="256,0,320,64" alt="Log Activity" href="help.html">
 </div>
 </body>
