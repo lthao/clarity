@@ -9,14 +9,13 @@
 
 <body>
     <div class="nav2">
-		<p>Recommendations</p>
+		<p>New Recommendation</p>
     </div>
 	<?php
 		include("config.php");
 		
 		$tagPresent = 0;
-		$name = "";
-		
+		$name = $_POST["recentActivity"];
 		/*
 		$tag1 = 0;//$newRow['tag1'];
 		echo "t1: ", $tag1, "<br />";
@@ -36,11 +35,11 @@
 		echo "t8: ", $tag8, "<br />";
 		*/
 		
-		$recentLog = "SELECT * FROM clarity WHERE how != 'NULL' ORDER BY ctime DESC";
+		$recentLog = "SELECT * FROM clarity WHERE what='$name'";
+		//echo $recentlog, "<br/>";
 		$recentLogResult = mysql_query($recentLog);
-		$newRow;
 		$newRow = mysql_fetch_array($recentLogResult); 
-		echo "<p>Based on your activity log of \"", $newRow['what'], "\"", "</p>";
+		echo "<p>Based on your activity log of \"", $newRow['what'], "\" ";
 		$name = $newRow['what'];
 		$tag1 = $newRow['tag1'];
 		$tag2 = $newRow['tag2'];
@@ -144,7 +143,7 @@
 		$result = mysql_query($query);
 		//echo "results: ";
 		//echo "<br />";
-		echo "<p>we recommend the following activities: <p/>";
+		echo " we recommend the following activities: <p/>";
 		while($row = mysql_fetch_array($result)) {
 			if ($row['what'] != $name) {
 				echo $row['what'];
