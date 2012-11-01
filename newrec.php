@@ -154,7 +154,7 @@
 			echo "<p>Find recommendations with recent activity:";
 				echo "<form action=\"newrec.php\" id=\"newRecForm\" method=\"post\">";
 					echo "<select name=\"recentActivity\">";
-					$recentQuery = "SELECT * FROM clarity WHERE how!='NULL' AND sum!='0' AND what!='$name'";
+					$recentQuery = "SELECT * FROM clarity WHERE how!='NULL' AND sum!='0' AND what!='$name' ORDER BY ctime DESC";
 					$recentRsult = mysql_query($recentQuery);
 					while ($recentRow = mysql_fetch_assoc($recentRsult)) {
 					    echo "<option value='".$recentRow['what']."'>".$recentRow['what']."</option>";
