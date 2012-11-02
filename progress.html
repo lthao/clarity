@@ -1,28 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
+	<!--var commandString;-->
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Clarity</title>
     <link href="css/style.css"rel="stylesheet" type="text/css" />
-    
-       <?php
-          include("config.php");
-      	$result = mysql_query("SELECT `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL'");
-    	$i = 0;
-    	$datastring = "data.addRows([";
-    	while($row = mysql_fetch_array($result)) {
-			$i++;
-			if ($i > 1) {
-				$datastring = $datastring.",";}
-			${$how.$i} = $row['how'];
-			${$ctime.$i} = $row['ctime'];
-			$datastring = $datastring."[".${$ctime.$i}.",".${$how.$i}."]";
-   		//	echo $row['how'], ", ",$row['ctime'];
-   		    }
-   		$datastring = $datastring."])";
-	    echo $datastring;
-?>  
     
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
@@ -36,20 +20,22 @@
       function drawChart() {
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('number', 'Date');
+        data.addColumn('string', 'Date');
         data.addColumn('number', 'Happiness');
         data.addRows([
-          [10.23, 3],
-          [10.24, 5],
-          [10.25, -4],
-          [10.26, 1],
-          [10.27, -2]
+          ["10.30", 3],
+          ["10.31", 3],
+          ["10.31", 5],
+          ["11.01", 3],
+          ["11.01", 3]
         ]);
+        //commandString;
 
         // Set chart options
         var options = {'title':'Am I Happy?',
                        'width':320,
-                       'height':300};
+                       'height':300,
+                       vAxis: {minValue: 2}};
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
@@ -60,6 +46,35 @@
   <body>
     <div class="nav2"><p>Progress</p></div>
     <div id="chart_div"></div>
+    
+    
+    
+    
+       <?php
+      	include("config.php");
+      	$result = mysql_query("SELECT `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL'");
+    	$i = 0;
+    	$datastring = "data.addRows([";
+    	while($row = mysql_fetch_array($result)) {
+			$i++;
+			if ($i > 1) {
+				$datastring = $datastring.",";}
+			$howStr = $row['how'];
+		//	echo $howStr;
+			$timeStr = $row['ctime'][5].$row['ctime'][6].".".$row['ctime'][8].$row['ctime'][9];
+		//	echo $timeStr;
+			$datastring = $datastring."[".$timeStr.",".$howStr."]";
+   		//	echo $row['how'], ", ",$row['ctime'];
+   		echo "On ".$timeStr.", you felt ".$howStr." happy.";
+   		echo "<br />";
+   	//	echo "\n";
+   		    }
+   		$datastring = $datastring."]);";
+	//  echo $datastring
+	
+	
+	  $commandString = $dataString;
+?>  
     
   </body>
 </html>
