@@ -16,43 +16,17 @@
 
       // Set a callback to run when the Google Visualization API is loaded.
       google.setOnLoadCallback(drawChart);
-
+		var barsVisualization;
       function drawChart() {
-        // Create the data table.
+      	
+        // Data Table for First Chart
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Date');
+        data.addColumn('number', 'Date');
         data.addColumn('number', 'Happiness');
-        data.addRows([
-          ["10.30", 3],
-          ["10.31", 3],
-          ["10.31", 5],
-          ["11.01", 3],
-          ["11.01", 3]
-        ]);
-        //commandString;
-
-        // Set chart options
-        var options = {'title':'Am I Happy?',
-                       'width':320,
-                       'height':300,
-                       vAxis: {minValue: 2}};
-
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
-  </head>
-
-  <body>
-    <div class="nav2"><p>Progress</p></div>
-    <div id="chart_div"></div>
-    
-    
-    
-    
-       <?php
+        // php for First Chart
+      <?php
       	include("config.php");
-      	$result = mysql_query("SELECT `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL'");
+      	$result = mysql_query("SELECT `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00'");
     	$i = 0;
     	$datastring = "data.addRows([";
     	while($row = mysql_fetch_array($result)) {
@@ -60,22 +34,82 @@
 			if ($i > 1) {
 				$datastring = $datastring.",";}
 			$howStr = $row['how'];
-		//	echo $howStr;
 			$timeStr = $row['ctime'][5].$row['ctime'][6].".".$row['ctime'][8].$row['ctime'][9];
-		//	echo $timeStr;
 			$datastring = $datastring."[".$timeStr.",".$howStr."]";
-   		//	echo $row['how'], ", ",$row['ctime'];
-   		echo "On ".$timeStr.", you felt ".$howStr." happy.";
-   		echo "<br />";
-   	//	echo "\n";
-   		    }
-   		$datastring = $datastring."]);";
-	//  echo $datastring
-	
-	
-	  $commandString = $dataString;
-?>  
-    
+    	}
+    	$datastring = $datastring."]);";
+		echo "$datastring";
+		?>
+		
+        // Data Table for Second Chart
+        var data2 = new google.visualization.DataTable();
+        data2.addColumn('number', 'Time');
+        data2.addColumn('number', 'Happiness');
+        // php for Second Chart
+       <?php
+      	include("config.php");
+      	$result2 = mysql_query("SELECT `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00'");
+    	$i2 = 0;
+    	$datastring2 = "data.addRows([";
+    	while($row2 = mysql_fetch_array($result2)) {
+//    		echo $row2;
+			$howStr2 = $row2['how'];
+			$dateStr2 = $row2['ctime'][5].$row2['ctime'][6].".".$row2['ctime'][8].$row2['ctime'][9];
+			if ($dateStr2 == '10.30') {
+				$i2++;
+				if ($i2 > 1) {
+				$datastring2 = $datastring2.",";
+				}	
+				$timeStr2 = $row2['ctime'][11].$row2['ctime'][12].".".$row2['ctime'][14].$row2['ctime'][15];
+	//			echo $timeStr;
+				$datastring2 = $datastring2."[".$timeStr2.",".$howStr2."]";
+			}
+    	}
+    	$datastring2 = $datastring2."]);";
+		echo "$datastring2";
+		?>
+ 
+        // Set chart options: First Chart
+        var options = {'title':'Happiness this week',
+                       'width':320,
+                       'height':150,
+                       vAxis: {minValue: -5},
+                       hAxis: {textStyle: {color:'white'}}
+                       };
+
+		var options2 = {'title':'Happiness on 10.31',
+                       'width':320,
+                       'height':150,
+                       vAxis: {minValue: -5},
+                       hAxis: {textStyle: {color:'white'}}
+                       };
+
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        
+        var chart2 = new google.visualization.LineChart(document.getElementById('chart_div2'));
+        chart2.draw(data2, options2);
+        
+        google.visualization.events.addListener(barsVisualization, 'onmouseover', lineMouseOver);
+    	google.visualization.events.addListener(barsVisualization, 'onmouseout', lineMouseOut);
+      }
+      
+      function lineMouseOver(e) {
+		    barsVisualization.setSelection([e]);
+		}
+
+		function lineMouseOut(e) {
+		    barsVisualization.setSelection([{'row': null, 'column': null}]);
+		}
+    </script>
+  </head>
+
+  <body>
+    <div class="nav2"><p>Progress</p></div>
+    <div id="chart_div2"></div>
+    </br>
+    <div id="chart_div"></div>
   </body>
 </html>
 </br>
