@@ -5,6 +5,49 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Clarity</title>
     <link href="css/style.css"rel="stylesheet" type="text/css" />
+
+
+	<script type="text/javascript">
+            	function doChecks(){
+                     if (!checkTags() && !checkDropDown()){
+				alert('You are missing two required fields. Please select at least one tag and one emoticon to represent how the activity made you feel.');
+                   		return false;
+			}
+			if (!checkTags()){
+				alert('Please select at least one tag');
+                   		return false;
+			}
+			if (!checkDropDown()){
+				alert('Please select an emoticon to represent how happy or upset the activity made you feel :) ');
+				return false;
+			}	
+			return true;
+		}
+		function checkTags() {
+                	var tagA = document.getElementById('tagA');
+			var tagB = document.getElementById('tagB');
+			var tagC = document.getElementById('tagC');
+			var tagD = document.getElementById('tagD');
+			var tagE = document.getElementById('tagE');
+			var tagF = document.getElementById('tagF');
+			var tagG = document.getElementById('tagG');
+			var tagH = document.getElementById('tagH');
+                	if(tagA.checked == false && tagB.checked == false && tagC.checked == false && tagD.checked == false && tagE.checked == false && tagF.checked == false && tagG.checked == false && tagH.checked == false) {
+                   		return false;
+                	}
+              	return true;
+            	}
+
+		function checkDropDown(){
+			var dd = document.getElementById('dd');
+			if(dd.value == -1){
+				return false;
+			}
+			return true;
+		}
+		
+        </script>
+
 </head>
 
 <body>
@@ -13,30 +56,37 @@
     </div>
 	<div>
 	   	<p>
-			<form action="submit.php" id="logform" method="post">
-				What did you do today? <input type="text" name="activity"/>
+			<form action="submit.php" onsubmit="return doChecks();" id="logform" method="post">
+				<img src="star2.gif" alt="required" width="10" height="10">What did you do today? <input type="text" name="activity" required="required"/>
 					<br>
-				How did it make you feel?
-					<select name="rating">
+				<img src="star2.gif" alt="required" width="10" height="10">How did it make you feel?
+					<select id = "dd" name="rating">
+						<option value="-1" selected="selected">Select one</option>
 						<option value="5">5</option>
+						<option value="4">4</option>
 						<option value="3">3</option>
-						<option value="0" selected="selected">0</option>
+						<option value="2">2</option>
+						<option value="1">1</option>
+						<option value="0">0</option>
+						<option value="-1">-1</option>
+						<option value="-2">-2</option>
 						<option value="-3">-3</option>
+						<option value="-4">-4</option>
 						<option value="-5">-5</option>
 					</select> 
 					<br>
 				When did you do it? <input type="datetime" name="time"/>
 					<br>
-				What tags describe this activity or what you liked most/least about this activity? 
+				<img src="star2.gif" alt="required" width="10" height="10">What tags describe this activity best? 
 					<br>
-						<input type="checkbox" name="tag1" value="outdoors">Outdoors
-						<input type="checkbox" name="tag2" value="play">Play
-						<input type="checkbox" name="tag3" value="read">Reading
-						<input type="checkbox" name="tag4" value="write">Writing
-						<input type="checkbox" name="tag5" value="social">Social
-						<input type="checkbox" name="tag6" value="lone">Alone time
-						<input type="checkbox" name="tag7" value="social">Social
-						<input type="checkbox" name="tag8" value="lone">Alone time
+						<input type="checkbox" name="tag1" id="tagA" value="g">Games
+						<input type="checkbox" name="tag2" id="tagB" value="o">Outdoors
+						<input type="checkbox" name="tag3" id="tagC" value="i">Indoors
+						<input type="checkbox" name="tag4" id="tagD" value="a">Art&Music
+						<input type="checkbox" name="tag5" id="tagE" value="s">Social
+						<input type="checkbox" name="tag6" id="tagF" value="l">Alone time
+						<input type="checkbox" name="tag7" id="tagG" value="m">Movement
+						<input type="checkbox" name="tag8" id="tagH" value="c">Creating
 					<br>
 				Any additional notes?
 				<br>
@@ -53,13 +103,14 @@
 	<br/>
 	<div id="footer">
 		<div class="box">
-		<img src="images/Ribbon.png" height="64" style ="max-width: 320px" alt="Whole Ribbon" usemap="#ribbonMap" align ="center">
-		<map name="ribbonMap">
-		<area shape = "rect" coords="0,0,64,64" alt="Progress" href="progress.html"> </area>
-		<area shape = "rect" coords="64,0,128,64" alt="Log Activity" href="log.html">	
-		<area shape = "rect" coords="128,0,192,64" alt="Log Activity" href="history.html">
-		<area shape = "rect" coords="192,0,256,64" alt="Recommendations" href="recommendtest.php">
-		<area shape = "rect" coords="256,0,320,64" alt="Log Activity" href="help.html">
+			<img src="images/Ribbon.png" height="64" style ="max-width: 320px" alt="Whole Ribbon" usemap="#ribbonMap" align ="center">
+			<map name="ribbonMap">
+			<area shape = "rect" coords="0,0,64,64" alt="Progress" href="progress.php"> </area>
+			<area shape = "rect" coords="64,0,128,64" alt="Log Activity" href="log.html">
+			<area shape = "rect" coords="128,0,192,64" alt="History" href="history.php">
+			<area shape = "rect" coords="192,0,256,64" alt="Recommendations" href="recommendtest.php">
+			<area shape = "rect" coords="256,0,320,64" alt="Help" href="help.html">
+		</div>
 	</div>
 </body>
 </html>

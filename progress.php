@@ -113,6 +113,11 @@ barsVisualization.setSelection([{'row': null, 'column': null}]);
   </body>
 </html>
 </br>
+</br>
+</br>
+</br>
+</br>
+</br>
 </br>	
 <div id="footer">
 	<div class="box">
