@@ -40,7 +40,7 @@
 
 		function checkDropDown(){
 			var dd = document.getElementById('dd');
-			if(dd.value == -1){
+			if(dd.value == -10){
 				return false;
 			}
 			return true;
@@ -68,50 +68,54 @@
 		$tag4 = 0;
 		$tag5 = 0;
 		$tag6 = 0;
-		$tag7 = 0
+		$tag7 = 0;
 		$tag8 = 0;
-		//$sum = 0;
+		$sum = 0;//to be used as tagMatch
 		if (isset($_POST["tag1"])) {
 			$tag1 = 1;
-			//$sum += 10;
+			$sum += 10;
 		}
 		$tag2 = 0;
 		if (isset($_POST["tag2"])) {
 			$tag2 = 1;
-			//$sum += 10;
+			$sum += 10;
 		}
 		$tag3 = 0;
 		if (isset($_POST["tag3"])) {
 			$tag3 = 1;
-			//$sum += 10;
+			$sum += 10;
 		}
 		$tag4 = 0;
 		if (isset($_POST["tag4"])) {
 			$tag4 = 1;
-			//$sum += 10;
+			$sum += 10;
 		}
 		$tag5 = 0;
 		if (isset($_POST["tag5"])) {
 			$tag5 = 1;
-			//$sum += 10;
+			$sum += 10;
 		}
 		$tag6 = 0;
 		if (isset($_POST["tag6"])) {
 			$tag6 = 1;
-			//$sum += 10;
+			$sum += 10;
 		}
 		if (isset($_POST["tag6"])) {
 			$tag7 = 1;
-			//$sum += 10;
+			$sum += 10;
 		}
 		if (isset($_POST["tag6"])) {
 			$tag8 = 1;
-			//$sum += 10;
+			$sum += 10;
 		}
 	
 		//INSERT INTO `c_cs147_lao793`.`orders` (`name`, `email`, `book`) VALUES ('$name', '$email', '$book');
+		if (($how == '-1') || ($how == '-2') || ($how == '-3') || ($how == '-4') || ($how == '-5')) {
+			echo "<p> reset sum </p>";
+			$sum = 0;
+		}
 		
-		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `ctime`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`, `tag7`, `tag8`) VALUES ('$what', '$how', '$ctime', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6', '$tag7', '$tag8')";
+		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `ctime`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`, `tag7`, `tag8`, `tagMatch`) VALUES ('$what', '$how', '$ctime', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6', '$tag7', '$tag8', '$sum')";
 		//echo $query;
 		$result = mysql_query($query);
 		
@@ -124,7 +128,7 @@
 				<br>
 			<img src="star2.gif" alt="required" width="10" height="10">How did it make you feel?
 				<select id = "dd" name="rating">
-					<option value="-1" selected="selected">Select one</option>
+					<option value="-10" selected="selected">Select one</option>
 					<option value="5">5</option>
 					<option value="4">4</option>
 					<option value="3">3</option>

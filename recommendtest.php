@@ -17,7 +17,8 @@
 		$tagPresent = 0;
 		$name = "";
 		
-		$recentLog = "SELECT * FROM clarity WHERE how != 'NULL' ORDER BY ctime DESC";
+		$recentLog = "SELECT * FROM clarity WHERE how != 'NULL' AND tagMatch !='0' ORDER BY ctime DESC";
+		
 		$recentLogResult = mysql_query($recentLog);
 		$newRow;
 		$newRow = mysql_fetch_array($recentLogResult); 
@@ -163,7 +164,7 @@
 			//echo "<br />";include 'recommendtest.php';
 			//echo "<p>", $exact, "</p>";
 			
-			$setResult = mysql_query($exactQuery);
+			//$setResult = mysql_query($exactQuery);
 		
 			$result = mysql_query($query);
 			//echo "results: ";
@@ -186,7 +187,7 @@
 				if ($row['what'] != $name) {
 					if ($row['sum'] == $indexSum) {
 						if (!$exactFlag) {
-							echo "<p>Activities with exact tag matches:</p>";
+							echo "<p>Activities with the same tags:</p>";
 							$exactFlag = 1;
 						}
 					} else {
@@ -195,12 +196,11 @@
 							if ($row['sum'] == 1) {
 								echo "<p>Activities with 1 similar tag:</p>";
 							} else {
-								echo "<p>Activities with", $row['sum'], " similar tags:</p>";
+								echo "<p>Activities with ", $row['sum'], " similar tags:</p>";
 							}
 							$relativeHow = $row['sum'];
 						}
 					}
-				
 					echo "<p>-", $row['what'], "</p>";
 				}
 			}
@@ -212,7 +212,7 @@
 					echo "<form action=\"newrec.php\" id=\"newRecForm\" method=\"post\">";
 						echo "<p>Select Activity: ";
 							echo "<select name=\"recentActivity\">";
-							$recentQuery = "SELECT * FROM clarity WHERE how!='NULL' ORDER BY ctime DESC";
+							$recentQuery = "SELECT * FROM clarity WHERE how!='NULL' AND tagMatch !='0' ORDER BY ctime DESC";
 							$recentRsult = mysql_query($recentQuery);
 							while ($recentRow = mysql_fetch_assoc($recentRsult)) {
 							    echo "<option value='".$recentRow['what']."'>".$recentRow['what']."</option>";

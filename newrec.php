@@ -159,7 +159,7 @@
 		//echo $query;
 		//echo "<br />";include 'recommendtest.php';
 		
-		$setResult = mysql_query($exactQuery);
+		//$setResult = mysql_query($exactQuery);
 		
 		$result = mysql_query($query);
 		//echo "results: ";
@@ -180,7 +180,7 @@
 				if ($row['what'] != $name) {
 					if ($row['sum'] == $indexSum) {
 						if (!$exactFlag) {
-							echo "<p>Activities with exact tag matches:</p>";
+							echo "<p>Activities with the same tags:</p>";
 							$exactFlag = 1;
 						}
 					} else {
@@ -194,7 +194,6 @@
 							$relativeHow = $row['sum'];
 						}
 					}
-
 					echo "<p>-", $row['what'], "</p>";
 				}
 			}
@@ -231,7 +230,7 @@
 				echo "<form action=\"newrec.php\" id=\"newRecForm\" method=\"post\">";
 					echo "<p>Select Activity: ";
 						echo "<select name=\"recentActivity\">";
-						$recentQuery = "SELECT * FROM clarity WHERE how!='NULL' ORDER BY ctime DESC";
+						$recentQuery = "SELECT * FROM clarity WHERE how != 'NULL' AND tagMatch !='0' ORDER BY ctime DESC";
 						$recentRsult = mysql_query($recentQuery);
 						while ($recentRow = mysql_fetch_assoc($recentRsult)) {
 						    echo "<option value='".$recentRow['what']."'>".$recentRow['what']."</option>";
