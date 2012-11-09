@@ -9,37 +9,21 @@
 
 <body>
     <div class="nav2">
-		<p>New Recommendation</p>
+		<p>New Recommendations</p>
     </div>
 	<?php
 		include("config.php");
 		
 		$tagPresent = 0;
 		$name = $_POST["recentActivity"];
-		/*
-		$tag1 = 0;//$newRow['tag1'];
-		echo "t1: ", $tag1, "<br />";
-		$tag2 = 0;//$newRow['tag2'];
-		echo "t2: ", $tag2, "<br />";
-		$tag3 = 0;//$newRow['tag3'];
-		echo "t3: ", $tag3, "<br />";
-		$tag4 = 0;//$newRow['tag4'];
-		echo "t4: ", $tag4, "<br />";
-		$tag5 = 0;//$newRow['tag5'];
-		echo "t5: ", $tag5, "<br />";
-		$tag6 = 0;//$newRow['tag6'];
-		echo "t6: ", $tag6, "<br />";
-		$tag7 = 0;//$newRow['tag7'];
-		echo "t7: ", $tag7, "<br />";
-		$tag8 = 0;//$newRow['tag8'];
-		echo "t8: ", $tag8, "<br />";
-		*/
+		$num = $_POST["numRecs"];
+		//echo "<p>test", $num, "</p>";
 		
 		$recentLog = "SELECT * FROM clarity WHERE what='$name'";
 		//echo $recentlog, "<br/>";
 		$recentLogResult = mysql_query($recentLog);
 		$newRow = mysql_fetch_array($recentLogResult); 
-		echo "<p>Based on your activity log of \"", $newRow['what'], "\" ";
+		echo "<p>Your log of \"", $newRow['what'], "\" has these tags:";
 		$name = $newRow['what'];
 		$tag1 = $newRow['tag1'];
 		$tag2 = $newRow['tag2'];
@@ -49,151 +33,223 @@
 		$tag6 = $newRow['tag6'];
 		$tag7 = $newRow['tag7'];
 		$tag8 = $newRow['tag8'];
-		/*
-		echo "<br/ >";
-		echo "name: ", $name, "<br />";
-		//$tag1 = $newRow['tag1'];
-		echo "t1: ", $tag1, "<br />";
-		//$tag2 = $newRow['tag2'];
-		echo "t2: ", $tag2, "<br />";
-		//$tag3 = 0;//$newRow['tag3'];
-		echo "t3: ", $tag3, "<br />";
-		//$tag4 = 0;//$newRow['tag4'];
-		echo "t4: ", $tag4, "<br />";
-		//$tag5 = 0;//$newRow['tag5'];
-		echo "t5: ", $tag5, "<br />";
-		//$tag6 = 0;//$newRow['tag6'];
-		echo "t6: ", $tag6, "<br />";
-		//$tag7 = 0;//$newRow['tag7'];
-		echo "t7: ", $tag7, "<br />";
-		//$tag8 = 0;//$newRow['tag8'];
-		echo "t8: ", $tag8, "<br />";
-		*/
-		//$targetSum = 20;
+		$indexSum = 0;
+		
+		$exactQuery = "UPDATE clarity SET tagMatch='1' WHERE";
+		$exact = "SELECT * FROM clarity WHERE"; //not actually used
 		$query = "SELECT * FROM clarity WHERE";
 		//echo "before: ";
 		//echo $query;
 		if ($tag1) {
+			$exact .= " tag1='1'";
+			$exactQuery .= " tag1='1'";
 			$query .= " tag1='1'";
+			echo "<p> -Games </p>";
 			$tagPresent = 1;
+			$indexSum = $indexSum + 1;
+			mysql_query("UPDATE clarity SET sum=sum + 1 WHERE tag1='1'");
 		}
 		if ($tag2) {
+			echo "<p> -Outdoors </p>";
 			if ($tagPresent) {
+				$exact .= " AND";
+				$exactQuery .= " AND";
 				$query .= " OR";
 			} else {
 				$tagPresent = 1;
 			}
+			$indexSum = $indexSum + 1;
+			mysql_query("UPDATE clarity SET sum=sum + 1 WHERE tag2='1'");
+			$exact .= " tag2='1'";
+			$exactQuery .= " tag2='1'";
 			$query .= " tag2='1'";
 		}
 		if ($tag3) {
+			echo "<p> -Indoors </p>";
 			if ($tagPresent) {
+				$exact .= " AND";
+				$exactQuery .= " AND";
 				$query .= " OR";
 			} else {
 				$tagPresent = 1;
 			}
+			$indexSum = $indexSum + 1;
+			mysql_query("UPDATE clarity SET sum=sum + 1 WHERE tag3='1'");
+			$exact .= " tag3='1'";
+			$exactQuery .= " tag3='1'";
 			$query .= " tag3='1'";
 		}
 		if ($tag4) {
+			echo "<p> -Art and Music </p>";
 			if ($tagPresent) {
+				$exact .= " AND";
+				$exactQuery .= " AND";
 				$query .= " OR";
 			} else {
 				$tagPresent = 1;
 			}
+			$indexSum = $indexSum + 1;
+			mysql_query("UPDATE clarity SET sum=sum + 1 WHERE tag4='1'");
+			$exact .= " tag4='1'";
+			$exactQuery .= " tag4='1'";
 			$query .= " tag4='1'";
 		}
 		if ($tag5) {
+			echo "<p> -Social </p>";
 			if ($tagPresent) {
+				$exact .= " AND";
+				$exactQuery .= " AND";
 				$query .= " OR";
 			} else {
 				$tagPresent = 1;
 			}
+			$indexSum = $indexSum + 1;
+			mysql_query("UPDATE clarity SET sum=sum + 1 WHERE tag5='1'");
+			$exact .= " tag5='1'";
+			$exactQuery .= " tag5='1'";
 			$query .= " tag5='1'";
 		}
 		if ($tag6) {
+			echo "<p> -Alone Time </p>";
 			if ($tagPresent) {
+				$exact .= " AND";
+				$exactQuery .= " AND";
 				$query .= " OR";
 			} else {
 				$tagPresent = 1;
 			}
+			$indexSum = $indexSum + 1;
+			mysql_query("UPDATE clarity SET sum=sum + 1 WHERE tag6='1'");
+			$exact .= " tag6='1'";
+			$exactQuery .= " tag6='1'";
 			$query .= " tag6='1'";
 		}
 		if ($tag7) {
+			echo "<p> -Movement </p>";
 			if ($tagPresent) {
+				$exact .= " AND";
+				$exactQuery .= " AND";
 				$query .= " OR";
 			} else {
 				$tagPresent = 1;
 			}
+			$indexSum = $indexSum + 1;
+			mysql_query("UPDATE clarity SET sum=sum + 1 WHERE tag7='1'");
+			$exact .= " tag7='1'";
+			$exactQuery .= " tag7='1'";
 			$query .= " tag7='1'";
 		}
 		if ($tag8) {
+			echo "<p> -Creating </p>";
 			if ($tagPresent) {
+				$exact .= " AND";
+				$exactQuery .= " AND";
 				$query .= " OR";
 			}
+			$indexSum = $indexSum + 1;
+			mysql_query("UPDATE clarity SET sum=sum + 1 WHERE tag8='1'");
+			$exact .= " tag8='1'";
+			$exactQuery .= " tag8='1'";
 			$query .= " tag8='1'";
 		}
-		//$exactQuery = $query;
-		//$exactQuery .= " AND sum LIKE '{$targetSum}'";
-		//echo $exactQuery, "<br />";
-		$query .= " ORDER BY sum ASC";
+		//echo "<p>test ", $indexSum, "</p>";
+		$query .= " ORDER BY sum DESC, how DESC";
 		//echo "<br />";
 		//echo "query: ";
 		//echo $query;
 		//echo "<br />";include 'recommendtest.php';
 		
+		$setResult = mysql_query($exactQuery);
+		
 		$result = mysql_query($query);
 		//echo "results: ";
 		//echo "<br />";
-		echo " we recommend the following activities: <p/>";
-		while($row = mysql_fetch_array($result)) {
-			if ($row['what'] != $name) {
-				echo $row['what'];
-		    	echo "<br />";
+
+		echo"</br>";
+		if ($num!=100) {
+			echo "<p>Using these tags we recommend <br/> these top ", $num, " activities: <p/>";
+		} else {
+			echo "<p>Using these tags we recommend <br/> the following activities: <p/>";
+		}
+		$exactFlag = 0;
+		$relativeFlag = 0;
+		$relativeHow = 0;
+		if ($num==100) {
+			//shows all
+			while($row = mysql_fetch_array($result)) {
+				if ($row['what'] != $name) {
+					if ($row['sum'] == $indexSum) {
+						if (!$exactFlag) {
+							echo "<p>Activities with exact tag matches:</p>";
+							$exactFlag = 1;
+						}
+					} else {
+						if ($row['sum'] != $relativeHow) {
+							echo"</br>";
+							if ($row['sum'] == 1) {
+								echo "<p>Activities with 1 similar tag:</p>";
+							} else {
+								echo "<p>Activities with ", $row['sum'], " similar tags:</p>";
+							}
+							$relativeHow = $row['sum'];
+						}
+					}
+
+					echo "<p>-", $row['what'], "</p>";
+				}
+			}
+		} else {
+			for ($i = 0; $i< $num; $i++) {
+				$row = mysql_fetch_array($result);
+				if ($row['what'] != $name) {
+					if ($row['sum'] == $indexSum) {
+						if (!$exactFlag) {
+							echo "<p>Exact matches:</p>";
+							$exactFlag = 1;
+						}
+					} else {
+						if ($row['sum'] != $relativeHow) {
+							echo"</br>";
+							if ($row['sum'] == 1) {
+								echo "<p>Activities with 1 similar tag:</p>";
+							} else {
+								echo "<p>Activities with ", $row['sum'], " similar tags:</p>";
+							}
+							$relativeHow = $row['sum'];
+						}
+					}
+				
+					echo "<p>-", $row['what'], "</p>";
+				}
 			}
 		}
+		
+		mysql_query("UPDATE clarity SET sum='0'");
+		echo"</br>";
 		echo "<div align=\"center\">";
-			echo "<p>Find recommendations with recent activity:";
+			echo "<p>Viewing options:";
 				echo "<form action=\"newrec.php\" id=\"newRecForm\" method=\"post\">";
-					echo "<select name=\"recentActivity\">";
-					$recentQuery = "SELECT * FROM clarity WHERE how!='NULL' AND sum!='0' AND what!='$name' ORDER BY ctime DESC";
-					$recentRsult = mysql_query($recentQuery);
-					while ($recentRow = mysql_fetch_assoc($recentRsult)) {
-					    echo "<option value='".$recentRow['what']."'>".$recentRow['what']."</option>";
-					}
+					echo "<p>Select Activity: ";
+						echo "<select name=\"recentActivity\">";
+						$recentQuery = "SELECT * FROM clarity WHERE how!='NULL' ORDER BY ctime DESC";
+						$recentRsult = mysql_query($recentQuery);
+						while ($recentRow = mysql_fetch_assoc($recentRsult)) {
+						    echo "<option value='".$recentRow['what']."'>".$recentRow['what']."</option>";
+						}
+						echo "</select>";
+					echo "</p>";
+					echo "<p> Number of suggestions: ";
+					echo "<select name=\"numRecs\">";
+						echo "<option value=\"5\">5</option>";
+						echo "<option value=\"10\">10</option>";
+						echo "<option value=\"15\">15</option>";
+						echo "<option selected=\"selected\" value=\"100\">See All</option>";
 					echo "</select>";
 					echo "<input type=\"submit\" value=\"Submit\"/>";
 				echo "</form>";
 			echo "</p>";
 		echo "</div>";
 	?>
-	<!--
-   	<p>
-		Based on your most recent activity log, we suggest you try the following activities:
-		<ul>
-		  <li>Running</li>
-		  <li>Hiking</li>
-		  <li>Reading outside</li>
-		</ul>
-	</p>
-
-	<p>Find recommendations with recent activity: 
-		<select style="height: 30px">
-	  		<option>Biking</option>
-	  		<option>Painting</option>
-	  		<option>Chatting</option>
-			<option>Swimming</option>
-	  		<option>Lacrosse</option>
-	  		<option>Dancing</option>
-			<option>Photography</option>
-	  		<option>Sleeping</option>
-	  		<option>Eating</option>
-		</select>
-		 <input type="button" style="height: 20px; width: 70px" onClick="location.href='construction.html'" value="Submit"/>
-	</p>
-	<p>Find recommendations with new activity: 
-		<input type="text" name="newActivity" style="height: 30px"/>
-		<input type="button" style="height: 20px; width: 70px" onClick="location.href='construction.html'" value="Submit"/>
-	</p>
-		-->
 	<br/>
 	<br/>
 	<br/>

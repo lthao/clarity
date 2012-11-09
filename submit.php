@@ -68,40 +68,50 @@
 		$tag4 = 0;
 		$tag5 = 0;
 		$tag6 = 0;
-		$sum = 0;
+		$tag7 = 0
+		$tag8 = 0;
+		//$sum = 0;
 		if (isset($_POST["tag1"])) {
 			$tag1 = 1;
-			$sum += 10;
+			//$sum += 10;
 		}
 		$tag2 = 0;
 		if (isset($_POST["tag2"])) {
 			$tag2 = 1;
-			$sum += 10;
+			//$sum += 10;
 		}
 		$tag3 = 0;
 		if (isset($_POST["tag3"])) {
 			$tag3 = 1;
-			$sum += 10;
+			//$sum += 10;
 		}
 		$tag4 = 0;
 		if (isset($_POST["tag4"])) {
 			$tag4 = 1;
-			$sum += 10;
+			//$sum += 10;
 		}
 		$tag5 = 0;
 		if (isset($_POST["tag5"])) {
 			$tag5 = 1;
-			$sum += 10;
+			//$sum += 10;
 		}
 		$tag6 = 0;
 		if (isset($_POST["tag6"])) {
 			$tag6 = 1;
-			$sum += 10;
+			//$sum += 10;
+		}
+		if (isset($_POST["tag6"])) {
+			$tag7 = 1;
+			//$sum += 10;
+		}
+		if (isset($_POST["tag6"])) {
+			$tag8 = 1;
+			//$sum += 10;
 		}
 	
 		//INSERT INTO `c_cs147_lao793`.`orders` (`name`, `email`, `book`) VALUES ('$name', '$email', '$book');
 		
-		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `ctime`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`, `sum`) VALUES ('$what', '$how', '$ctime', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6', '$sum')";
+		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `ctime`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`, `tag7`, `tag8`) VALUES ('$what', '$how', '$ctime', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6', '$tag7', '$tag8')";
 		//echo $query;
 		$result = mysql_query($query);
 		
@@ -126,7 +136,7 @@
 					<option value="-3">-3</option>
 					<option value="-4">-4</option>
 					<option value="-5">-5</option>
-				</select> 
+				</select>
 				<br>
 			When did you do it? <input type="datetime" name="time"/>
 				<br>
