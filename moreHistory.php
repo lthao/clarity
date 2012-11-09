@@ -12,9 +12,7 @@
 <p>History</p>
     </div>
     <div class="clear"></div>
-  <p>
-Here are your latest entries:
-</p>
+
 <!--	<table border="1" align ="center">
 <tr> <td>Time</td> <td> Activity </td> <td> Happiness Level</td> </tr>
 <tr> <td>12:40PM</td> <td>Walk </td> <td>+3</td> </tr>
@@ -26,18 +24,24 @@ Here are your latest entries:
 
 <?php
 	include("config.php");
+	$num = $_POST["numRecs"];
+	
 	$query = "SELECT * FROM clarity WHERE how !='NULL' ORDER BY ctime DESC";
 	echo "</br>";
 
 	$result = mysql_query($query);
-
-	if($result === FALSE) {
-		echo "</br> Sorry, you have no history yet.<br />";
-		echo "</br> Click on the Log icon and log some activities! <br />";
-	    die(mysql_error());
-	} else {
+	if ($num==100) {
 		echo "<p>";
-		for ($i = 0; $i< 5; $i++)
+		while($row = mysql_fetch_array($result)) {
+			echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", $row['when'], "Notes: ", $row['notes'];
+			echo "</br>";
+			echo "<br>";
+		}
+		echo "<p/>";
+	} else {
+		echo "<p> Here are your latest ", $num, " entries: </p>";
+		echo "<p>";
+		for ($i = 0; $i < $num; $i++)
 		{
 			$row = mysql_fetch_array($result);
 			echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", $row['when'], "Notes: ", $row['notes'];
@@ -45,22 +49,22 @@ Here are your latest entries:
 			echo "<br>";
 		}
 		echo "</p>";
-	
-		echo "<div align=\"center\">";
-			echo "<p>Viewing options:";
-				echo "<form action=\"moreHistory.php\" id=\"newRecForm\" method=\"post\">";
-					echo "<p> Number of entries: ";
-					echo "<select name=\"numRecs\">";
-						echo "<option value=\"5\">5</option>";
-						echo "<option value=\"10\">10</option>";
-						echo "<option value=\"15\">15</option>";
-						echo "<option selected=\"selected\" value=\"100\">See All</option>";
-					echo "</select>";
-					echo "<input type=\"submit\" value=\"Submit\"/>";
-				echo "</form>";
-			echo "</p>";
-		echo "</div>";
 	}
+	
+	echo "<div align=\"center\">";
+		echo "<p>Viewing options:";
+			echo "<form action=\"moreHistory.php\" id=\"newRecForm\" method=\"post\">";
+				echo "<p> Number of entries: ";
+				echo "<select name=\"numRecs\">";
+					echo "<option value=\"5\">5</option>";
+					echo "<option value=\"10\">10</option>";
+					echo "<option value=\"15\">15</option>";
+					echo "<option selected=\"selected\" value=\"100\">See All</option>";
+				echo "</select>";
+				echo "<input type=\"submit\" value=\"Submit\"/>";
+			echo "</form>";
+		echo "</p>";
+	echo "</div>";
 ?>
 </br>
 <!--

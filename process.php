@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Clarity</title>
 <link href="css/style.css"rel="stylesheet" type="text/css" />
-    
+
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
 
@@ -24,10 +24,9 @@ function drawChart() {
 	data.addColumn('number', 'Happiness');
     // php for First Chart
 	<?php
-	$todayPlotted = 0;
-	$dateToday = date('m.d', strtotime(date('Y/m/d')));
-	$monthNum = date('m', strtotime(date('Y/m/d')));
-	$dayNum = date('d', strtotime(date('Y/m/d')));
+	$dateInput = $_GET['dateInput'];
+	$monthNum = $dateInput[5].$dateInput[6];
+	$dayNum = $dateInput[8].$dateInput[9];
 	$monthNum = $monthNum + 1 - 1;
 	$dayNum = $dayNum + 1 - 1;
 	$dateToday = $monthNum.".".$dayNum;
@@ -168,7 +167,10 @@ function drawChart() {
 
 	// php for Second Chart
 	<?php
-	$dateToday = date('m.d', strtotime(date('Y/m/d'))); 
+	$dateInput = $_GET['dateInput'];
+	$monthNum = $dateInput[5].$dateInput[6];
+	$dayNum = $dateInput[8].$dateInput[9];
+	$dateToday = $monthNum.".".$dayNum;
 	include("config.php");
 	$result2 = mysql_query("SELECT `what`, `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' ORDER BY `ctime` ASC");
      $i2 = 0;
@@ -217,6 +219,8 @@ function lineMouseOut(e) {
 	barsVisualization.setSelection([{'row': null, 'column': null}]);
 }
 </script>
+
+
 </head>
 
 <body>
@@ -232,6 +236,7 @@ function lineMouseOut(e) {
     </form>
 	</div>
 </body>
+
 </html>
 </br>
 </br>
@@ -252,4 +257,3 @@ function lineMouseOut(e) {
 	</div>
 </div>
 </body>
-</html>
