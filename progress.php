@@ -131,10 +131,17 @@ function drawChart() {
 	$i = 0;
 	$datastring = "data.addRows([";
 	while($row = mysql_fetch_array($result)) {
+		// catch for 0x.xx
 		if ($row['ctime'][5]!=0)
-			$dateStr2 = $row['ctime'][5].$row['ctime'][6].".".$row['ctime'][8].$row['ctime'][9];
+			$dateStr2 = $row['ctime'][5].$row['ctime'][6].".";
 		else
-			$dateStr2 = $row['ctime'][6].".".$row['ctime'][8].$row['ctime'][9];
+			$dateStr2 = $row['ctime'][6].".";
+		// catch for xx.0x
+		if ($row['ctime'][8]!=0)
+			$dateStr2 = $dateStr2.$row['ctime'][8].$row['ctime'][9];
+		else
+			$dateStr2 = $dateStr2.$row['ctime'][9];	
+
 		if ($dateStr2 == $dateToday || $dateStr2 == $date1ago || $dateStr2 == $date2ago || $dateStr2 == $date3ago || $dateStr2 == $date4ago || $dateStr2 == $date5ago  || $dateStr2 == $date6ago) {
 			$i++;
 			if ($i > 1) {
@@ -152,7 +159,7 @@ function drawChart() {
    		echo " var options = {'title':'Happiness this week, ";
    		$weekStr = $date6ago." to ".$dateToday;
 		echo $weekStr;
-		echo "', 'width':320, 'height':150, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}},legend: {position: 'none'}, pointSize: 2};";
+		echo "', 'width':320, 'height':150, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}, title: 'Date'},legend: {position: 'none'}, pointSize: 2};";
 		echo " var chart = new google.visualization.LineChart(document.getElementById('chart_div')); chart.draw(data, options);";
     } else {
     	$alertStr = "alert('You haven\'t made any progress this week yet.');";
@@ -197,7 +204,7 @@ function drawChart() {
    		echo "$datastring2";
    		echo " var options2 = {'title':'Happiness today, ";
 		echo $dateToday;
-		echo "', 'width':320, 'height':150, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}},legend: {position: 'none'}, pointSize: 2};";
+		echo "', 'width':320, 'height':150, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}, title: 'Time'},legend: {position: 'none'}, pointSize: 2};";
 		echo " var chart2 = new google.visualization.LineChart(document.getElementById('chart_div2')); chart2.draw(data2, options2);";
     } else {
     	$alertStr = "alert('You haven\'t made any progress today yet.');";
