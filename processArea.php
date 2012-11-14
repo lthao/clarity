@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
+	<script src="//cdn.optimizely.com/js/139087747.js"></script>
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Clarity</title>
 <link href="css/style.css"rel="stylesheet" type="text/css" />
-    
+
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
 
@@ -20,14 +20,13 @@ function drawChart() {
       
 	// Data Table for First Chart: THIS WEEK
 	var data = new google.visualization.DataTable();
-	data.addColumn('number', 'Date');
+	data.addColumn('string', 'Date');
 	data.addColumn('number', 'Happiness');
     // php for First Chart
 	<?php
-	$todayPlotted = 0;
-	$dateToday = date('m.d', strtotime(date('Y/m/d')));
-	$monthNum = date('m', strtotime(date('Y/m/d')));
-	$dayNum = date('d', strtotime(date('Y/m/d')));
+	$dateInput = $_GET['dateInput'];
+	$monthNum = $dateInput[5].$dateInput[6];
+	$dayNum = $dateInput[8].$dateInput[9];
 	$monthNum = $monthNum + 1 - 1;
 	$dayNum = $dayNum + 1 - 1;
 	$dateToday = $monthNum.".".$dayNum;
@@ -141,7 +140,7 @@ function drawChart() {
 			$dateStr2 = $dateStr2.$row['ctime'][8].$row['ctime'][9];
 		else
 			$dateStr2 = $dateStr2.$row['ctime'][9];	
-
+		//echo $dateStr2.",".$dateToday." ";
 		if ($dateStr2 == $dateToday || $dateStr2 == $date1ago || $dateStr2 == $date2ago || $dateStr2 == $date3ago || $dateStr2 == $date4ago || $dateStr2 == $date5ago  || $dateStr2 == $date6ago) {
 			$i++;
 			if ($i > 1) {
@@ -149,7 +148,7 @@ function drawChart() {
 			}
 			$howStr = $row['how'];
 			$timeStr = $row['ctime'][5].$row['ctime'][6].".".$row['ctime'][8].$row['ctime'][9];
-			$datastring = $datastring."[".$timeStr.",".$howStr."]";
+			$datastring = $datastring."[\"".$timeStr."\",".$howStr."]";
 		}
     }
     $datastring = $datastring."]);";
@@ -159,8 +158,8 @@ function drawChart() {
    		echo " var options = {'title':'Happiness this week, ";
    		$weekStr = $date6ago." to ".$dateToday;
 		echo $weekStr;
-		echo "', 'width':320, 'height':150, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}, title: 'Date'},legend: {position: 'none'}, pointSize: 2};";
-		echo " var chart = new google.visualization.LineChart(document.getElementById('chart_div')); chart.draw(data, options);";
+		echo "', 'width':320, 'height':150, 'isStacked' : true, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}, title: 'Date'},legend: {position: 'none'}, pointSize: 2};";
+		echo " var chart = new google.visualization.ColumnChart(document.getElementById('chart_div')); chart.draw(data, options);";
     } else {
     	$alertStr = "alert('You haven\'t made any progress this week yet.');";
     	echo $alertStr;
@@ -169,13 +168,16 @@ function drawChart() {
 
 	// Data Table for Second Chart: TODAY
 	var data2 = new google.visualization.DataTable();
-	data2.addColumn('number', 'Time');
+	data2.addColumn('string', 'Time');
 	data2.addColumn('number', 'Happiness');
 	data2.addColumn({type:'string', role:'annotation'});
 
 	// php for Second Chart
 	<?php
-	$dateToday = date('m.d', strtotime(date('Y/m/d'))); 
+	$dateInput = $_GET['dateInput'];
+	$monthNum = $dateInput[5].$dateInput[6];
+	$dayNum = $dateInput[8].$dateInput[9];
+	$dateToday = $monthNum.".".$dayNum;
 	include("config.php");
 	$result2 = mysql_query("SELECT `what`, `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' ORDER BY `ctime` ASC");
      $i2 = 0;
@@ -194,7 +196,7 @@ function drawChart() {
 			$timeStr2 = $row2['ctime'][11].$row2['ctime'][12].".".$row2['ctime'][14].$row2['ctime'][15];
 		$holderStr2 = "'";
 		$whatStr2 = $holderStr2.$row2['what'].$holderStr2;
-		$datastring2 = $datastring2."[".$timeStr2.",".$howStr2.",".$whatStr2."]";
+		$datastring2 = $datastring2."[\"".$timeStr2."\",".$howStr2.",".$whatStr2."]";
 		}
 	}
     $datastring2 = $datastring2."]);";
@@ -204,8 +206,8 @@ function drawChart() {
    		echo "$datastring2";
    		echo " var options2 = {'title':'Happiness today, ";
 		echo $dateToday;
-		echo "', 'width':320, 'height':150, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}, title: 'Time'},legend: {position: 'none'}, pointSize: 2};";
-		echo " var chart2 = new google.visualization.LineChart(document.getElementById('chart_div2')); chart2.draw(data2, options2);";
+		echo "', 'width':320, 'height':150, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}, title: 'Time', maxValue: 24, minValue: 0},legend: {position: 'none'}, pointSize: 2};";
+		echo " var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div2')); chart2.draw(data2, options2);";
     } else {
     	$alertStr = "alert('You haven\'t made any progress today yet.');";
     	echo $alertStr;
@@ -224,25 +226,26 @@ function lineMouseOut(e) {
 	barsVisualization.setSelection([{'row': null, 'column': null}]);
 }
 </script>
+
+
 </head>
 
 <body>
 	<div class="nav2" style="position:relative;text-align:center;">	
 	    <p>Progress</p>
 		<a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px;
-		padding:4px 0;"> Log Out </a>
+		padding:5px 0;"> Log Out </a>
     </div>
     <p> Here's how you've done today & this week. </p>
     <div id="chart_div2"></div>
     <div id="chart_div"></div>
     <p> Choose a day to see your progress: </p>
-	<div align="center">
-    <form id = "date-form" action = "process.php" method = "get">
+    <form id = "date-form" action = "processArea.php" method = "get">
         <label for="progressDate"> Date: </label><input id="progressDate" type="date" name="dateInput" value="<?php echo date('Y-m-d', strtotime(date('Y/m/d'))); ?>"/>
         <input type="submit" value="Submit"> 
     </form>
-	</div>
 </body>
+
 </html>
 </br>
 </br>
@@ -263,4 +266,3 @@ function lineMouseOut(e) {
 	</div>
 </div>
 </body>
-</html>

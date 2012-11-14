@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<script src="//cdn.optimizely.com/js/139087747.js"></script>
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Clarity</title>
@@ -8,13 +9,12 @@
 </head>
 
 <body>
-    <div class="nav2">
-<p>History</p>
+   <div class="nav2" style="position:relative;text-align:center;">	
+	    <p>History</p>
+		<a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px;
+		padding:5px 0;"> Log Out </a>
     </div>
-    <div class="clear"></div>
-  <p>
-Here are your latest entries:
-</p>
+
 <!--	<table border="1" align ="center">
 <tr> <td>Time</td> <td> Activity </td> <td> Happiness Level</td> </tr>
 <tr> <td>12:40PM</td> <td>Walk </td> <td>+3</td> </tr>
@@ -26,23 +26,30 @@ Here are your latest entries:
 
 <?php
 	include("config.php");
-	$query = "SELECT * FROM clarity WHERE how !='NULL' ORDER BY ctime DESC";
+	$username = $_COOKIE['username'];
+	//echo "<p> Hello ", $username, "</p>";
+	$query = "SELECT * FROM clarity WHERE how !='NULL' AND username='$username' ORDER BY ctime DESC";
 	echo "</br>";
 
 	$result = mysql_query($query);
+	$row = mysql_fetch_array($result);
 
-	if($result === FALSE) {
-		echo "</br> Sorry, you have no history yet.<br />";
-		echo "</br> Click on the Log icon and log some activities! <br />";
-	    die(mysql_error());
+	if(!$row) {
+		echo "<p> Sorry, you have no history yet.<p/>";
+		echo "<p> Click on the Log icon and log some activities! <p/>";
+	    //die(mysql_error());
 	} else {
+		echo "<p> Here are your latest entries: </p>";
 		echo "<p>";
 		for ($i = 0; $i< 5; $i++)
 		{
+			//$row = mysql_fetch_array($result);
+			if ($row) {
+				echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", $row['when'], "Notes: ", $row['notes'];
+				echo "</br>";
+				echo "<br>";
+			}
 			$row = mysql_fetch_array($result);
-			echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", $row['when'], "Notes: ", $row['notes'];
-			echo "</br>";
-			echo "<br>";
 		}
 		echo "</p>";
 	
@@ -63,11 +70,6 @@ Here are your latest entries:
 	}
 ?>
 </br>
-<!--
-<p style="text-align:center;">
-	<input type="button" style="height: 20px; width: 70px; text-align:center" onClick="location.href='construction.html'" value="Edit"/>
-</p>
--->
 </br>
 </br>
 </br>

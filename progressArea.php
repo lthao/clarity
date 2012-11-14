@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
+	<script src="//cdn.optimizely.com/js/139087747.js"></script>
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Clarity</title>
@@ -20,7 +20,7 @@ function drawChart() {
       
 	// Data Table for First Chart: THIS WEEK
 	var data = new google.visualization.DataTable();
-	data.addColumn('number', 'Date');
+	data.addColumn('string', 'Date');
 	data.addColumn('number', 'Happiness');
     // php for First Chart
 	<?php
@@ -131,17 +131,10 @@ function drawChart() {
 	$i = 0;
 	$datastring = "data.addRows([";
 	while($row = mysql_fetch_array($result)) {
-		// catch for 0x.xx
 		if ($row['ctime'][5]!=0)
-			$dateStr2 = $row['ctime'][5].$row['ctime'][6].".";
+			$dateStr2 = $row['ctime'][5].$row['ctime'][6].".".$row['ctime'][8].$row['ctime'][9];
 		else
-			$dateStr2 = $row['ctime'][6].".";
-		// catch for xx.0x
-		if ($row['ctime'][8]!=0)
-			$dateStr2 = $dateStr2.$row['ctime'][8].$row['ctime'][9];
-		else
-			$dateStr2 = $dateStr2.$row['ctime'][9];	
-
+			$dateStr2 = $row['ctime'][6].".".$row['ctime'][8].$row['ctime'][9];
 		if ($dateStr2 == $dateToday || $dateStr2 == $date1ago || $dateStr2 == $date2ago || $dateStr2 == $date3ago || $dateStr2 == $date4ago || $dateStr2 == $date5ago  || $dateStr2 == $date6ago) {
 			$i++;
 			if ($i > 1) {
@@ -149,7 +142,7 @@ function drawChart() {
 			}
 			$howStr = $row['how'];
 			$timeStr = $row['ctime'][5].$row['ctime'][6].".".$row['ctime'][8].$row['ctime'][9];
-			$datastring = $datastring."[".$timeStr.",".$howStr."]";
+			$datastring = $datastring."[\"".$timeStr."\",".$howStr."]";
 		}
     }
     $datastring = $datastring."]);";
@@ -159,8 +152,8 @@ function drawChart() {
    		echo " var options = {'title':'Happiness this week, ";
    		$weekStr = $date6ago." to ".$dateToday;
 		echo $weekStr;
-		echo "', 'width':320, 'height':150, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}, title: 'Date'},legend: {position: 'none'}, pointSize: 2};";
-		echo " var chart = new google.visualization.LineChart(document.getElementById('chart_div')); chart.draw(data, options);";
+		echo "', 'width':320, 'height':150, 'isStacked' : true, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}, title: 'Date'},legend: {position: 'none'}, pointSize: 2};";
+		echo " var chart = new google.visualization.ColumnChart(document.getElementById('chart_div')); chart.draw(data, options);";
     } else {
     	$alertStr = "alert('You haven\'t made any progress this week yet.');";
     	echo $alertStr;
@@ -169,7 +162,7 @@ function drawChart() {
 
 	// Data Table for Second Chart: TODAY
 	var data2 = new google.visualization.DataTable();
-	data2.addColumn('number', 'Time');
+	data2.addColumn('string', 'Time');
 	data2.addColumn('number', 'Happiness');
 	data2.addColumn({type:'string', role:'annotation'});
 
@@ -194,7 +187,7 @@ function drawChart() {
 			$timeStr2 = $row2['ctime'][11].$row2['ctime'][12].".".$row2['ctime'][14].$row2['ctime'][15];
 		$holderStr2 = "'";
 		$whatStr2 = $holderStr2.$row2['what'].$holderStr2;
-		$datastring2 = $datastring2."[".$timeStr2.",".$howStr2.",".$whatStr2."]";
+		$datastring2 = $datastring2."[\"".$timeStr2."\",".$howStr2.",".$whatStr2."]";
 		}
 	}
     $datastring2 = $datastring2."]);";
@@ -204,8 +197,8 @@ function drawChart() {
    		echo "$datastring2";
    		echo " var options2 = {'title':'Happiness today, ";
 		echo $dateToday;
-		echo "', 'width':320, 'height':150, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}, title: 'Time'},legend: {position: 'none'}, pointSize: 2};";
-		echo " var chart2 = new google.visualization.LineChart(document.getElementById('chart_div2')); chart2.draw(data2, options2);";
+		echo "', 'width':320, 'height':150, vAxis: {minValue: -5}, hAxis: {textStyle: {color:'white'}},legend: {position: 'none'}, pointSize: 2};";
+		echo " var chart2 = new google.visualization.ColumnChart(document.getElementById('chart_div2')); chart2.draw(data2, options2);";
     } else {
     	$alertStr = "alert('You haven\'t made any progress today yet.');";
     	echo $alertStr;
@@ -236,12 +229,10 @@ function lineMouseOut(e) {
     <div id="chart_div2"></div>
     <div id="chart_div"></div>
     <p> Choose a day to see your progress: </p>
-	<div align="center">
-    <form id = "date-form" action = "process.php" method = "get">
+    <form id = "date-form" action = "processArea.php" method = "get">
         <label for="progressDate"> Date: </label><input id="progressDate" type="date" name="dateInput" value="<?php echo date('Y-m-d', strtotime(date('Y/m/d'))); ?>"/>
         <input type="submit" value="Submit"> 
     </form>
-	</div>
 </body>
 </html>
 </br>

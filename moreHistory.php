@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<script src="//cdn.optimizely.com/js/139087747.js"></script>
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Clarity</title>
@@ -8,10 +9,11 @@
 </head>
 
 <body>
-    <div class="nav2">
-<p>History</p>
+   <div class="nav2" style="position:relative;text-align:center;">	
+	    <p>History</p>
+		<a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px;
+		padding:5px 0;">Log Out</a>
     </div>
-    <div class="clear"></div>
 
 <!--	<table border="1" align ="center">
 <tr> <td>Time</td> <td> Activity </td> <td> Happiness Level</td> </tr>
@@ -25,8 +27,10 @@
 <?php
 	include("config.php");
 	$num = $_POST["numRecs"];
+	$username = $_COOKIE['username'];
+	//echo "<p> Hello ", $username, "</p>";
 	
-	$query = "SELECT * FROM clarity WHERE how !='NULL' ORDER BY ctime DESC";
+	$query = "SELECT * FROM clarity WHERE how !='NULL' AND username='$username' ORDER BY ctime DESC";
 	echo "</br>";
 
 	$result = mysql_query($query);
@@ -44,9 +48,11 @@
 		for ($i = 0; $i < $num; $i++)
 		{
 			$row = mysql_fetch_array($result);
-			echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", $row['when'], "Notes: ", $row['notes'];
-			echo "</br>";
-			echo "<br>";
+			if ($row) {
+				echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", $row['when'], "Notes: ", $row['notes'];
+				echo "</br>";
+				echo "<br>";
+			}
 		}
 		echo "</p>";
 	}

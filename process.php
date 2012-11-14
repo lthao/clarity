@@ -231,7 +231,11 @@ function lineMouseOut(e) {
 </head>
 
 <body>
-	<div class="nav2"><p>Progress</p></div>
+	<div class="nav2" style="position:relative;text-align:center;">	
+	    <p>Progress</p>
+		<a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px;
+		padding:4px 0;"> Log Out </a>
+    </div>
     <p> Here's how you've done today & this week. </p>
     <div id="chart_div2"></div>
     <div id="chart_div"></div>

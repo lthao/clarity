@@ -5,6 +5,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Clarity</title>
     <link href="css/style.css"rel="stylesheet" type="text/css" />
+<script src="jquery-1.8.2.min.js" type="text/javascript"></script>
+<script src="msdropdown/js/jquery-1.3.2.min.js" type="text/javascript"></script>
+<script src="msdropdown/js/jquery.dd.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="msdropdown/dd.css" />
 
 	<script type="text/javascript">
             	function doChecks(){
@@ -76,13 +80,29 @@
 </head>
 
 <body>
-    <div class="nav2">
+    
+ 
+  	<script language="javascript">
+	$(document).ready(function(e) {
+	try {
+		$("body select").msDropDown();
+	} catch(e) {
+		alert(e.message);
+	}
+	});
+</script>
+
+	<div class="nav2" style="position:relative;text-align:center;">	
 		<p>Log Activity</p>
-    </div>
+		<a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px;
+		padding:5px 0;"> Log Out </a>
+	 </div>
 
 	<?php
 		include("config.php");
 		//echo $_POST['rating'];
+		$username = $_COOKIE['username'];
+		//echo "<p> Hello ", $username, "</p>";
 		$what = $_POST["activity"];
 		$how = $_POST["rating"];
 		$ctime = $_POST["time"];
@@ -125,11 +145,11 @@
 			$tag6 = 1;
 			$sum += 10;
 		}
-		if (isset($_POST["tag6"])) {
+		if (isset($_POST["tag7"])) {
 			$tag7 = 1;
 			$sum += 10;
 		}
-		if (isset($_POST["tag6"])) {
+		if (isset($_POST["tag8"])) {
 			$tag8 = 1;
 			$sum += 10;
 		}
@@ -139,7 +159,7 @@
 			$sum = 0;
 		}
 
-		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `ctime`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`, `tag7`, `tag8`, `tagMatch`) VALUES ('$what', '$how', '$ctime', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6', '$tag7', '$tag8', '$sum')";
+		$query = "INSERT INTO `c_cs147_lao793`.`clarity` (`what`, `how`, `ctime`, `notes`, `tag1`, `tag2`, `tag3`, `tag4`, `tag5`, `tag6`, `tag7`, `tag8`, `tagMatch`, `username`) VALUES ('$what', '$how', '$ctime', '$notes', '$tag1', '$tag2', '$tag3', '$tag4', '$tag5', '$tag6', '$tag7', '$tag8', '$sum', '$username')";
 		//echo $query;
 		$result = mysql_query($query);
 
@@ -156,17 +176,17 @@
 				How did it make you feel?<FONT COLOR = "#CD0000">*</FONT> <br>
 					<select id = "dd" name="rating" onchange="checkFeeling()">
 						<option value="-20" selected="selected">Select one</option>
-						<option value="5">5</option>
-						<option value="4">4</option>
-						<option value="3">3</option>
-						<option value="2">2</option>
-						<option value="1">1</option>
-						<option value="0">0</option>
-						<option value="-1">-1</option>
-						<option value="-2">-2</option>
-						<option value="-3">-3</option>
-						<option value="-4">-4</option>
-						<option value="-5">-5</option>
+						<option value="5" title="emote/+5.gif">5</option>
+						<option value="4" title="emote/+4.gif">4</option>
+						<option value="3" title="emote/+3.gif">3</option>
+						<option value="2" title="emote/+2.gif">2</option>
+						<option value="1" title="emote/+1.gif">1</option>
+						<option value="0" title="emote/0.gif">0</option>
+						<option value="-1" title="emote/-1.gif">-1</option>
+						<option value="-2" title="emote/-2.gif">-2</option>
+						<option value="-3" title="emote/-3.gif">-3</option>
+						<option value="-4" title="emote/-4.gif">-4</option>
+						<option value="-5" title="emote/-5(andagain).gif">-5</option>
 					</select> 
 					<br>
 				When did you do it?<br> <input type="datetime" name="time"/>
