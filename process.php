@@ -180,6 +180,7 @@ function drawChart() {
 	$dayNum = $dateInput[8].$dateInput[9];
 	$dateToday = $monthNum.".".$dayNum;
 	include("config.php");
+	$username = $_COOKIE['username'];
 	$result2 = mysql_query("SELECT `what`, `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' AND `username`='$username' ORDER BY `ctime` ASC");
      $i2 = 0;
      $datastring2 = "data2.addRows([";
