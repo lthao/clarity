@@ -178,7 +178,8 @@ function drawChart() {
 	<?php
 	$dateToday = date('m.d', strtotime(date('Y/m/d'))); 
 	include("config.php");
-	$result2 = mysql_query("SELECT `what`, `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' ORDER BY `ctime` ASC");
+	$username = $_COOKIE['username'];
+	$result2 = mysql_query("SELECT `what`, `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' AND `username`='$username' ORDER BY `ctime` ASC");
      $i2 = 0;
      $datastring2 = "data2.addRows([";
      while($row2 = mysql_fetch_array($result2)) {
