@@ -127,7 +127,8 @@ function drawChart() {
 	$date6ago = $monthNum.".".$day6ago;
 	
 	include("config.php");
-	$result = mysql_query("SELECT `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' ORDER BY `ctime` ASC");
+	$username = $_COOKIE['username'];
+	$result = mysql_query("SELECT `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' AND username='$username' ORDER BY `ctime` ASC");
 	$i = 0;
 	$datastring = "data.addRows([";
 	while($row = mysql_fetch_array($result)) {
