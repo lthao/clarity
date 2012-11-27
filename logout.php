@@ -13,11 +13,9 @@
 </head>
 
 <body>
-	<p> You have logged out. </p>
-	<form action="home.php" id="login" method="post">
-		<p>Name: <input type="text" name="inputUsername"/> </p>
-		<p>Password: <input type="text" name="inputPassword"/> </p>
-		<p> <input type="submit" value="Submit"> </p>
+	<p> You have logged out of Clarity. </p>
+	<form method = "link" action="index.php">
+		<p> <input type="submit" value="Log back in"> </p>
 	</form>
 </body>
 </html>

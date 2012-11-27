@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<script src="//cdn.optimizely.com/js/139087747.js"></script>
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Clarity</title>
@@ -80,8 +81,6 @@
 </head>
 
 <body>
-    
- 
   	<script language="javascript">
 	$(document).ready(function(e) {
 	try {
@@ -94,8 +93,7 @@
 
 	<div class="nav2" style="position:relative;text-align:center;">	
 		<p>Log Activity</p>
-		<a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px;
-		padding:5px 0;"> Log Out </a>
+		<a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px; padding:4px 0;"> Log Out </a>
 	 </div>
 
 	<?php
@@ -166,6 +164,7 @@
 	?>
 	<p> Your log was submitted. </p>
 
+<!--
 	<div>
 	   	<p>
 			<form action="submit.php" onsubmit="return doChecks();" id="logform" method="post">
@@ -211,6 +210,7 @@
 			</form>
 		</p>
 	</div>
+	-->
 	<br/>
 	<br/>
 	<br/>
@@ -218,7 +218,7 @@
 	<br/>
 	<div id="footer">
 		<div class="box">
-			<img src="images/Ribbon.png" height="64" style ="max-width: 320px" alt="Whole Ribbon" usemap="#ribbonMap" align ="center">
+			<img src="images/RibbonLog.png" height="64" style ="max-width: 320px" alt="Whole Ribbon" usemap="#ribbonMap" align ="center">
 			<map name="ribbonMap">
 			<area shape = "rect" coords="0,0,64,64" alt="Progress" href="progress.php"> </area>
 			<area shape = "rect" coords="64,0,128,64" alt="Log Activity" href="log.html">

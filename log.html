@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<script src="//cdn.optimizely.com/js/139087747.js"></script>
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Clarity</title>
@@ -11,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="msdropdown/dd.css" />
 
 	<script type="text/javascript">
+		var rating= -20;
             	function doChecks(){
                      if (!checkName() && !checkDropDown()){
 				alert('You are missing two required fields. Please name your activity and select at least one emoticon to represent how the activity made you feel.');
@@ -40,7 +42,13 @@
 			} else {
 				hideTags();
 			} 
-
+			if(rating != -20) {
+				if( Math.abs(rating - dd.value) > 2){
+					window.optimizely = window.optimizely || [];
+  					window.optimizely.push(['trackEvent', 'RATE_CHANGED']);
+				}
+			}
+			rating = dd.value;
 		}
 		function showTags(){
 			document.getElementById('div1').style.display="block";

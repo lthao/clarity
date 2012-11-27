@@ -9,7 +9,7 @@
 </head>
 
 <body>
-	<div><a href="index.php"><img src="images/ClarityIconWide.png" height = "100" width="320px" alt="Clarity logo"/></a></div>
+	<div><a href="index2.php"><img src="images/ClarityIconWide.png" height = "100" width="320px" alt="Clarity logo"/></a></div>
 	<!--
     <div class="nav2">
 		<p>clarity</p>
@@ -26,7 +26,7 @@
 		</p>
 		
 		<div class="menu">
-			<form action = "checkPass1.php" method= "post" id = "login">
+			<form action = "checkPass2.php" method= "post" id = "login">
 
 <h2>Login</h2>
 
@@ -43,7 +43,7 @@
 <br>
 
 New to Clarity?
-<form method= "link" action="signUp.php">
+<form method= "link" action="signUp2.php">
 <input type ="submit" value= "Sign up for a Clarity account" />
 </form>
 		</div>
