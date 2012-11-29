@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<script src="//cdn.optimizely.com/js/139087747.js"></script>
-	<meta http-equiv="refresh" content="0; URL= process.php">
+	<!--<meta http-equiv="refresh" content="0; URL= process.php">-->
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Clarity</title>
@@ -129,6 +129,9 @@ $date6ago = $monthNum.".".$day6ago;
 
 include("config.php");
 $username = $_COOKIE['username'];
+$progResult = mysql_query("SELECT `progNum` FROM `clarity` WHERE `username` = '$username'");
+$progRow = mysql_fetch_array($progResult);
+$progNum = $progRow['progNum'];
 $result = mysql_query("SELECT `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' AND username='$username' ORDER BY `ctime` ASC");
 $i = 0;
 $datastring = "data.addRows([";
@@ -156,7 +159,7 @@ $datastring = $datastring."[".$timeStr.",".$howStr."]";
     }
     $datastring = $datastring."]);";
     
-    if ($i > 0) {
+    if (($i > 0) && ($progNum != 1)) {
     echo "$datastring";
     echo " var options = {'title':'Happiness this week, ";
     $weekStr = $date6ago." to ".$dateToday;
@@ -180,6 +183,9 @@ data2.addColumn({type:'string', role:'annotation'});
 $dateToday = date('m.d', strtotime(date('Y/m/d')));
 include("config.php");
 $username = $_COOKIE['username'];
+$progResult = mysql_query("SELECT `progNum` FROM `clarity` WHERE `username` = '$username'");
+$progRow = mysql_fetch_array($progResult);
+$progNum = $progRow['progNum'];
 $result2 = mysql_query("SELECT `what`, `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' AND `username`='$username' ORDER BY `ctime` ASC");
      $i2 = 0;
      $datastring2 = "data2.addRows([";
@@ -202,7 +208,7 @@ $datastring2 = $datastring2."[".$timeStr2.",".$howStr2.",".$whatStr2."]";
 }
     $datastring2 = $datastring2."]);";
     
-    if ($i2 > 0) {
+    if (($i2 > 0) && ($progNum != 2)) {
      $todayPlotted = 1;
     echo "$datastring2";
     echo " var options2 = {'title':'Happiness today, ";
@@ -234,7 +240,7 @@ barsVisualization.setSelection([{'row': null, 'column': null}]);
 <a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px;
 padding:4px 0;"> Log Out </a>
 </div>
-<p> Here's how you've done today & this week. </p>
+<p> Here's how you've done recently. </p>
 <div id="chart_div2"></div>
 <div id="chart_div"></div>
 <p> Choose a day to see your progress: </p>
@@ -244,6 +250,19 @@ padding:4px 0;"> Log Out </a>
 <input type="submit" value="Submit">
 </form>
 </div>
+
+<div align = center>
+<form action= "customProgress.php" id="customProgForm" method= "post">
+<p> Graphs to show:
+<select name = "progNum">
+	<option value="1"> Only today </option>
+	<option value="2"> Only this week </option>
+	<option value="3"> Both </option>
+</select>
+<input type= "submit" value="Submit">;
+</form>
+</div>
+
 </body>
 </html>
 </br>
