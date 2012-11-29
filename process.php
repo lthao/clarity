@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<script src="//cdn.optimizely.com/js/139087747.js"></script>
+<!--	<script src="//cdn.optimizely.com/js/139087747.js"></script>-->
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Clarity</title>
@@ -127,33 +127,37 @@ $date6ago = $monthNum.".".$day6ago;
 
 include("config.php");
 $username = $_COOKIE['username'];
+$progResult = mysql_query("SELECT `progNum` FROM `clarity` WHERE `username` = '$username'");
+$progRow = mysql_fetch_array($progResult);
+$progNum = $progRow['progNum'];
 $result = mysql_query("SELECT `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' AND username='$username' ORDER BY `ctime` ASC");
 $i = 0;
 $datastring = "data.addRows([";
+
 while($row = mysql_fetch_array($result)) {
+
 // catch for 0x.xx
 if ($row['ctime'][5]!=0)
-$dateStr2 = $row['ctime'][5].$row['ctime'][6].".";
+	$dateStr2 = $row['ctime'][5].$row['ctime'][6].".";
 else
-$dateStr2 = $row['ctime'][6].".";
+	$dateStr2 = $row['ctime'][6].".";
 // catch for xx.0x
 if ($row['ctime'][8]!=0)
-$dateStr2 = $dateStr2.$row['ctime'][8].$row['ctime'][9];
+	$dateStr2 = $dateStr2.$row['ctime'][8].$row['ctime'][9];
 else
-$dateStr2 = $dateStr2.$row['ctime'][9];	
-//echo $dateStr2.",".$dateToday." ";
+	$dateStr2 = $dateStr2.$row['ctime'][9];	
 if ($dateStr2 == $dateToday || $dateStr2 == $date1ago || $dateStr2 == $date2ago || $dateStr2 == $date3ago || $dateStr2 == $date4ago || $dateStr2 == $date5ago || $dateStr2 == $date6ago) {
-$i++;
-if ($i > 1) {
-$datastring = $datastring.",";
+	$i++;
+	if ($i > 1) {
+	$datastring = $datastring.",";
+	}
+	$howStr = $row['how'];
+	$timeStr = $row['ctime'][5].$row['ctime'][6].".".$row['ctime'][8].$row['ctime'][9];
+	$datastring = $datastring."[".$timeStr.",".$howStr."]";
+	}
 }
-$howStr = $row['how'];
-$timeStr = $row['ctime'][5].$row['ctime'][6].".".$row['ctime'][8].$row['ctime'][9];
-$datastring = $datastring."[".$timeStr.",".$howStr."]";
-}
-    }
     $datastring = $datastring."]);";
-    
+    if ($progNum != 1) {
     if ($i > 0) {
     echo "$datastring";
     echo " var options = {'title':'Happiness this week, ";
@@ -164,6 +168,7 @@ echo " var chart = new google.visualization.LineChart(document.getElementById('c
     } else {
      $alertStr = "alert('You haven\'t made any progress this week yet.');";
      echo $alertStr;
+    }
     }
 ?>
 
@@ -181,6 +186,9 @@ $dayNum = $dateInput[8].$dateInput[9];
 $dateToday = $monthNum.".".$dayNum;
 include("config.php");
 $username = $_COOKIE['username'];
+$progResult = mysql_query("SELECT `progNum` FROM `clarity` WHERE `username` = '$username'");
+$progRow = mysql_fetch_array($progResult);
+$progNum = $progRow['progNum'];
 $result2 = mysql_query("SELECT `what`, `how`, `ctime` FROM `clarity` WHERE `how` != 'NULL' AND `ctime` != '00:00:00' AND `username`='$username' ORDER BY `ctime` ASC");
      $i2 = 0;
      $datastring2 = "data2.addRows([";
@@ -202,8 +210,8 @@ $datastring2 = $datastring2."[".$timeStr2.",".$howStr2.",".$whatStr2."]";
 }
 }
     $datastring2 = $datastring2."]);";
-    
-    if ($i2 > 0) {
+   if ($progNum !=2) {
+   if ($i2 > 0) {
      $todayPlotted = 1;
     echo "$datastring2";
     echo " var options2 = {'title':'Happiness today, ";
@@ -214,6 +222,7 @@ echo " var chart2 = new google.visualization.LineChart(document.getElementById('
      $alertStr = "alert('You haven\'t made any progress today yet.');";
      echo $alertStr;
     }
+   }
 ?>
 google.visualization.events.addListener(barsVisualization, 'onmouseover', lineMouseOver);
 google.visualization.events.addListener(barsVisualization, 'onmouseout', lineMouseOut);
@@ -241,10 +250,26 @@ padding:4px 0;"> Log Out </a>
 <div id="chart_div2"></div>
 <div id="chart_div"></div>
 <p> Choose a day to see your progress: </p>
+<div align = "center">
 <form id = "date-form" action = "process.php" method = "get">
 <label for="progressDate"> Date: </label><input id="progressDate" type="date" name="dateInput" value="<?php echo date('Y-m-d', strtotime(date('Y/m/d'))); ?>"/>
 <input type="submit" value="Submit">
 </form>
+</div>
+
+<div align = center>
+<form action= "customProgress.php" id="customProgForm" method= "post">
+<p> Graphs to show:
+<select name = "progNum">
+	<option value="1"> Only today </option>
+	<option value="2"> Only this week </option>
+	<option value="3"> Both </option>
+</select>
+<input type= "submit" value="Submit">;
+</form>
+</div>
+
+
 </body>
 
 </html>
