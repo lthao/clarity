@@ -14,14 +14,6 @@
 		<a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px; padding:4px 0;">Log Out</a>
     </div>
 
-<!--	<table border="1" align ="center">
-<tr> <td>Time</td> <td> Activity </td> <td> Happiness Level</td> </tr>
-<tr> <td>12:40PM</td> <td>Walk </td> <td>+3</td> </tr>
-<tr> <td>11:05AM</td> <td>Sing </td> <td>+1</td> </tr>
-<tr> <td>10:10PM</td> <td>Shower </td> <td>+6</td> </tr>
-<tr> <td>9:10AM</td> <td>Binge </td> <td>-7</td> </tr>	
-</table>	
-</br>-->
 
 <?php
 	include("config.php");
@@ -33,10 +25,35 @@
 	echo "</br>";
 
 	$result = mysql_query($query);
-	if ($num==100) {
+	if ($num == "Today") {
+		echo "<p>";
+		$dateToday = date('y-m-d', strtotime(date('Y/m/d')));
+		// find today. should get: 2012-11-29
+		echo "<b>Today's date: ".$dateToday."</b>";
+		echo "<br>"; echo "<br>";
+		$temp = TRUE;
+		while($temp==TRUE){
+			$row = mysql_fetch_array($result);
+			$ctime = $row['ctime'];	
+			$dateEntry = $ctime[2].$ctime[3].$ctime[4].$ctime[5].$ctime[6].$ctime[7].$ctime[8].$ctime[9];
+		//	echo "dateEntry is ".$dateEntry;
+		// $dateEntry should be 2012-11-29
+			if ($dateEntry == $dateToday) {
+				$timeEntry = $ctime[11].$ctime[12].$ctime[13].$ctime[14].$ctime[15];
+				echo $row['what']," at ",$timeEntry, "</br>", "Rating: ", $row['how'], "</br>", "Notes: ", $row['notes'];
+				echo "</br>";
+				echo "<br>";
+			} else {
+				break;
+			}
+		}
+		// parse out today's date from ctime and row
+		// keep going until the date is no longer correct.
+	}
+	else if ($num==100) {
 		echo "<p>";
 		while($row = mysql_fetch_array($result)) {
-			echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", $row['when'], "Notes: ", $row['notes'];
+			echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", "Notes: ", $row['notes'];
 			echo "</br>";
 			echo "<br>";
 		}
@@ -48,7 +65,7 @@
 		{
 			$row = mysql_fetch_array($result);
 			if ($row) {
-				echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", $row['when'], "Notes: ", $row['notes'];
+				echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", "Notes: ", $row['notes'];
 				echo "</br>";
 				echo "<br>";
 			}
@@ -61,6 +78,7 @@
 			echo "<form action=\"moreHistory.php\" id=\"newRecForm\" method=\"post\">";
 				echo "<p> Number of entries: ";
 				echo "<select name=\"numRecs\">";
+					echo "<option value=\"Today\">Today</option>";
 					echo "<option value=\"5\">5</option>";
 					echo "<option value=\"10\">10</option>";
 					echo "<option value=\"15\">15</option>";
