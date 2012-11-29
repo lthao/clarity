@@ -14,15 +14,6 @@
 		<a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px; padding:4px 0;"> Log Out </a>
     </div>
 
-<!--	<table border="1" align ="center">
-<tr> <td>Time</td> <td> Activity </td> <td> Happiness Level</td> </tr>
-<tr> <td>12:40PM</td> <td>Walk </td> <td>+3</td> </tr>
-<tr> <td>11:05AM</td> <td>Sing </td> <td>+1</td> </tr>
-<tr> <td>10:10PM</td> <td>Shower </td> <td>+6</td> </tr>
-<tr> <td>9:10AM</td> <td>Binge </td> <td>-7</td> </tr>	
-</table>	
-</br>-->
-
 <?php
 	include("config.php");
 	$username = $_COOKIE['username'];
@@ -55,8 +46,9 @@
 		echo "<div align=\"center\">";
 			echo "<p>Viewing options:";
 				echo "<form action=\"moreHistory.php\" id=\"newRecForm\" method=\"post\">";
-					echo "<p> Number of entries: ";
+					echo "<p> Style of entries: ";
 					echo "<select name=\"numRecs\">";
+						echo "<option value=\"Today\">Today</option>";
 						echo "<option value=\"5\">5</option>";
 						echo "<option value=\"10\">10</option>";
 						echo "<option value=\"15\">15</option>";
