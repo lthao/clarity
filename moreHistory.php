@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Clarity</title>
-    <link href="css/style.css"rel="stylesheet" type="text/css" />
+     <link href="css/style.css"rel="stylesheet" type="text/css" />
+    <link rel="stylesheet"  href="http://jquerymobile.com/test/css/themes/default/jquery.mobile.css" />  
+	<link rel="stylesheet" href="http://jquerymobile.com/test/docs/_assets/css/jqm-docs.css"/>
+    <script src="http://jquerymobile.com/test/js/jquery.js"></script>
+	<script src="http://jquerymobile.com/test/docs/_assets/js/jqm-docs.js"></script>
+	<script src="http://jquerymobile.com/test/js/jquery.mobile.js"></script>
 </head>
 
 <body>
@@ -21,7 +26,7 @@
 	$username = $_COOKIE['username'];
 	//echo "<p> Hello ", $username, "</p>";
 	
-	$query = "SELECT * FROM clarity WHERE how !='NULL' AND username='$username' ORDER BY ctime DESC";
+	$query = "SELECT * FROM clarity WHERE how !='NULL' AND username='$username' AND ctime != '0000-00-00 00:00' ORDER BY ctime DESC";
 	echo "</br>";
 
 	$result = mysql_query($query);
@@ -32,20 +37,32 @@
 		echo "<b>Today's date: ".$dateToday."</b>";
 		echo "<br>"; echo "<br>";
 		$temp = TRUE;
+		$i = 0;
 		while($temp==TRUE){
 			$row = mysql_fetch_array($result);
 			$ctime = $row['ctime'];	
 			$dateEntry = $ctime[2].$ctime[3].$ctime[4].$ctime[5].$ctime[6].$ctime[7].$ctime[8].$ctime[9];
+			$time = $row['ctime'];
+$time = $time[0].$time[1].$time[2].$time[3].$time[4].$time[5].$time[6].$time[7].$time[8].$time[9].$time[10].$time[11].$time[12].$time[13].$time[14].$time[15];
 		//	echo "dateEntry is ".$dateEntry;
 		// $dateEntry should be 2012-11-29
 			if ($dateEntry == $dateToday) {
-				$timeEntry = $ctime[11].$ctime[12].$ctime[13].$ctime[14].$ctime[15];
-				echo $row['what']," at ",$timeEntry, "</br>", "Rating: ", $row['how'], "</br>", "Notes: ", $row['notes'];
-				echo "</br>";
-				echo "<br>";
+//				$timeEntry = $ctime[11].$ctime[12].$ctime[13].$ctime[14].$ctime[15];
+				echo "<div data-role=\"collapsible-set\"><div data-role=\"collapsible\">";
+				echo "<h3>", $time, ": ", $row['what'], "</h3>";
+				echo "<p>", "Happiness: ", $row['how'], ". ", "</p>";
+				echo "<div data-role=\"collapsible\">";
+				echo "<h3>", "Notes: ", "</h3>";
+				echo "<p>",$row['notes'],"</p>";
+				echo "</div>";
+				echo "</div>";
 			} else {
 				break;
 			}
+		}
+		if ($i == 0) {
+			echo "<br>";
+			echo "You have no entries from today yet.";
 		}
 		// parse out today's date from ctime and row
 		// keep going until the date is no longer correct.
@@ -53,9 +70,16 @@
 	else if ($num==100) {
 		echo "<p>";
 		while($row = mysql_fetch_array($result)) {
-			echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", "Notes: ", $row['notes'];
-			echo "</br>";
-			echo "<br>";
+			$time = $row['ctime'];
+$time = $time[0].$time[1].$time[2].$time[3].$time[4].$time[5].$time[6].$time[7].$time[8].$time[9].$time[10].$time[11].$time[12].$time[13].$time[14].$time[15];
+				echo "<div data-role=\"collapsible-set\"><div data-role=\"collapsible\">";
+				echo "<h3>", $time, ": ", $row['what'], "</h3>";
+				echo "<p>", "Happiness: ", $row['how'], "</p>";
+				echo "<div data-role=\"collapsible\">";
+				echo "<h3>", "Notes: ", "</h3>";
+				echo "<p>",$row['notes'],"</p>";
+				echo "</div>";
+				echo "</div>";
 		}
 		echo "<p/>";
 	} else {
@@ -65,18 +89,25 @@
 		{
 			$row = mysql_fetch_array($result);
 			if ($row) {
-				echo "Activity: ", $row['what'], "</br>", "Rating: ", $row['how'], "</br>", "Notes: ", $row['notes'];
-				echo "</br>";
-				echo "<br>";
+					$time = $row['ctime'];
+$time = $time[0].$time[1].$time[2].$time[3].$time[4].$time[5].$time[6].$time[7].$time[8].$time[9].$time[10].$time[11].$time[12].$time[13].$time[14].$time[15];
+				echo "<div data-role=\"collapsible-set\"><div data-role=\"collapsible\">";
+				echo "<h3>", $time, ": ", $row['what'], "</h3>";
+				echo "<p>", "Happiness: ", $row['how'], "</p>";
+				echo "<div data-role=\"collapsible\">";
+				echo "<h3>", "Notes: ", "</h3>";
+				echo "<p>",$row['notes'],"</p>";
+				echo "</div>";
+				echo "</div>";
 			}
 		}
 		echo "</p>";
 	}
-	
+	echo "<br>";
 	echo "<div align=\"center\">";
-		echo "<p>Viewing options:";
+//		echo "<p>Viewing options:";
 			echo "<form action=\"moreHistory.php\" id=\"newRecForm\" method=\"post\">";
-				echo "<p> Number of entries: ";
+				echo "<p> Style of entries: ";
 				echo "<select name=\"numRecs\">";
 					echo "<option value=\"Today\">Today</option>";
 					echo "<option value=\"5\">5</option>";
