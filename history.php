@@ -13,10 +13,6 @@
 	<script src="http://jquerymobile.com/test/docs/_assets/js/jqm-docs.js"></script>
 	<script src="http://jquerymobile.com/test/js/jquery.mobile.js"></script>
 
-    <title>Clarity</title>
-    <link href="css/style.css"rel="stylesheet" type="text/css" />
-    <meta charset="utf-8">
-
 <!--    <link rel="stylesheet" href="jquery.mobile-1.2.0.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="jquery-1.8.2.min.js"></script>
@@ -39,7 +35,8 @@
 
 	$result = mysql_query($query);
 	$row = mysql_fetch_array($result);
-
+	$time = $row['ctime'];
+$time = $time[0].$time[1].$time[2].$time[3].$time[4].$time[5].$time[6].$time[7].$time[8].$time[9].$time[10].$time[11].$time[12].$time[13].$time[14].$time[15];
 	if(!$row) {
 		echo "<p> Sorry, you have no history yet.<p/>";
 		echo "<p> Click on the Log icon and log some activities! <p/>";
@@ -52,7 +49,7 @@
 			//$row = mysql_fetch_array($result);
 			if ($row) {
 				echo "<div data-role=\"collapsible-set\"><div data-role=\"collapsible\">";
-				echo "<h3>", $row['ctime'], ": ", $row['what'], "</h3>";
+				echo "<h3>", $time, ": ", $row['what'], "</h3>";
 				echo "<p>", "Happiness: ", $row['how'], ". ", "</p>";
 				echo "<div data-role=\"collapsible\">";
 				echo "<h3>", "Notes: ", "</h3>";
