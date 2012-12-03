@@ -50,7 +50,7 @@ $time = $time[0].$time[1].$time[2].$time[3].$time[4].$time[5].$time[6].$time[7].
 			if ($row) {
 				echo "<div data-role=\"collapsible-set\"><div data-role=\"collapsible\">";
 				echo "<h3>", $time, ": ", $row['what'], "</h3>";
-				echo "<p>", "Happiness: ", $row['how'], ". ", "</p>";
+				echo "<p>", "Happiness: ", $row['how'], "</p>";
 				echo "<div data-role=\"collapsible\">";
 				echo "<h3>", "Notes: ", "</h3>";
 				echo "<p>",$row['notes'],"</p>";
