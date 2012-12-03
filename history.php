@@ -21,9 +21,10 @@
 </head>
 
 <body>
-   <div class="nav2" style="position:relative;text-align:center;">	
-	    <p>History</p>
-		<a href="logout.php" style="position:absolute; top:0px; right:0px; text-decoration:none; font-size:18px; font-family:Apex New, Helvetica, sans-serif; color:#ffffff; margin:0 5px; padding:4px 0;"> Log Out </a>
+    <div data-role="header" data-theme="b">
+        <!--<a href="index.html" data-icon="delete" >Save</a>-->
+        <h1>History</h1>
+        <a rel="external" href="logout.php" data-role="button" class="ui-btn-right">Log Out</a>
     </div>
 
 <?php
